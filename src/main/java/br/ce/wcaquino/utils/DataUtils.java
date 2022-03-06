@@ -37,7 +37,7 @@ public class DataUtils {
 	 * @param dias Quantidade de dias a ser incrementado/decrementado
 	 * @return Data atualizada
 	 */
-	public static Date obterDataComDiferencaDias(int dias) {
+	public static @NotNull Date obterDataComDiferencaDias(int dias) {
 		return adicionarDias(new Date(), dias);
 	}
 	
@@ -49,7 +49,7 @@ public class DataUtils {
 	 * @param ano O ano atual.
 	 * @return A data atualizada.
 	 */
-	public static Date obterData(int dia, int mes, int ano){
+	public static @NotNull Date obterData(int dia, int mes, int ano){
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(DAY_OF_MONTH, dia);
 		calendar.set(MONTH, mes - 1);
@@ -63,7 +63,7 @@ public class DataUtils {
 	 * 
 	 * @param data1 A primeira data a ser verificada.
 	 * @param data2 A segunda data a ser verificada.
-	 * @return Valor boolean resultante da verificação.
+	 * @return Valor <code>boolean</code> resultante da verificação.
 	 */
 	public static boolean isMesmaData(Date data1, Date data2) {
 		Calendar calendar1 = Calendar.getInstance();
@@ -80,7 +80,7 @@ public class DataUtils {
 	 * 
 	 * @param data Data a ser avaliada
 	 * @param diaSemana <code>true</code> caso seja o dia da semana desejado, <code>false</code> em caso contrário 
-	 * @return Valor boolean resultante da verificação.
+	 * @return Valor <code>boolean</code> resultante da verificação.
 	 */
 	public static boolean verificarDiaSemana(Date data, int diaSemana) {
 		Calendar calendar = Calendar.getInstance();

@@ -9,7 +9,17 @@ import java.util.Date;
 
 import static br.ce.wcaquino.utils.DataUtils.adicionarDias;
 
+/**
+ * Classe de execução do sistema.
+ */
 public class LocacaoService {
+    /**
+     * Atualiza os valores da locação para o usuário e filme passados por parâmetro.
+     *
+     * @param usuario O usuário do qual deve ser feita a modificação.
+     * @param filme O filme do qual deve ser feita a modificação.
+     * @return A <code>Locacao</code> atualizada.
+     */
     public Locacao alugarFilme(Usuario usuario, Filme filme) {
         Locacao locacao = new Locacao();
         locacao.setFilme(filme);
@@ -24,6 +34,7 @@ public class LocacaoService {
 
         //Salvando a locação...
         //TODO adicionar método para salvar
+
         /*Princípios dos testes unitários
         * Fast -> os resultados precisam ser exibidos imediatamente
         * Independent -> Tudo o que o teste precisa para executar já está nele.
@@ -34,6 +45,11 @@ public class LocacaoService {
         return locacao;
     }
 
+    /**
+     * Realiza os primeiros testes.
+     *
+     * @param args Argumentão padrão do método main.
+     */
     public static void main(String[] args) {
 //		Given
         Usuario usuario = new Usuario("Wanderley");

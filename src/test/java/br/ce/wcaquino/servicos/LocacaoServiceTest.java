@@ -11,6 +11,8 @@ import java.util.Date;
 
 import static br.ce.wcaquino.utils.DataUtils.isMesmaData;
 import static br.ce.wcaquino.utils.DataUtils.obterDataComDiferencaDias;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LocacaoServiceTest {
@@ -25,7 +27,7 @@ class LocacaoServiceTest {
         Locacao locacao = locacaoService.alugarFilme(usuario, filme);
 
 //		Then
-        MatcherAssert.assertThat(locacao.getValor(), CoreMatchers.is(5.)); // Verifica o preço da locação
+        assertThat(locacao.getValor(), is(5.)); // Verifica o preço da locação
         assertTrue(isMesmaData(locacao.getDataLocacao(), new Date())); // Verifica a data da locação
         assertTrue(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1))); // Verifica a data de retorno da locação
     }

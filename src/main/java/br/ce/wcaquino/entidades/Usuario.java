@@ -19,11 +19,9 @@ public class Usuario {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof Usuario)) return false;
-
-		Usuario usuario = (Usuario) o;
+	public boolean equals(Object object) {
+		if (this == object) return true;
+		if (!(object instanceof Usuario usuario)) return false;
 
 		return nome.equals(usuario.nome);
 	}

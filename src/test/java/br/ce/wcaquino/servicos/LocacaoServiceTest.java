@@ -24,7 +24,7 @@ class LocacaoServiceTest {
         Locacao locacao = locacaoService.alugarFilme(usuario, filme);
 
 //		Then
-        assertEquals(5., locacao.getValor()); // Verifica o preço da locação
+        assertEquals(5., locacao.getValor(),"O valor da locação não corresponde ao esperado"); // Verifica o preço da locação
         assertTrue(isMesmaData(locacao.getDataLocacao(), new Date())); // Verifica a data da locação
         assertTrue(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1))); // Verifica a data de retorno da locação
     }

@@ -9,8 +9,7 @@ import java.util.Date;
 
 import static br.ce.wcaquino.utils.DataUtils.isMesmaData;
 import static br.ce.wcaquino.utils.DataUtils.obterDataComDiferencaDias;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -27,6 +26,7 @@ class LocacaoServiceTest {
 
 //		Then
         assertThat(locacao.getValor(), is(equalTo(5.))); // Verifica o preço da locação
+        assertThat(locacao.getValor(), is(not(6.)));
         assertTrue(isMesmaData(locacao.getDataLocacao(), new Date())); // Verifica a data da locação
         assertTrue(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1))); // Verifica a data de retorno da locação
     }

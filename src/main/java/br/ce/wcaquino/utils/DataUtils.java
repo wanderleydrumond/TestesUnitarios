@@ -1,5 +1,7 @@
 package br.ce.wcaquino.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import static java.util.Calendar.DAY_OF_MONTH;
 import static java.util.Calendar.DAY_OF_WEEK;
 import static java.util.Calendar.MONTH;
@@ -8,17 +10,20 @@ import static java.util.Calendar.YEAR;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Classe que contém métodos utilitários para verificações de datas.
+ */
 public class DataUtils {
 	
 	/**
-	 * Retorna a data enviada por parametro com a adição dos dias desejado
-	 * 	a Data pode estar no futuro (dias > 0) ou no passado (dias < 0)
+	 * Retorna a data enviada por parâmetro com a adição dos dias desejados.
+	 * A Data pode estar no futuro (dias > 0) ou no passado (dias < 0).
 	 * 
-	 * @param data
-	 * @param dias
-	 * @return
+	 * @param data A data atual
+	 * @param dias Os dias que será realizada a diferença
+	 * @return O dia resultante
 	 */
-	public static Date adicionarDias(Date data, int dias) {
+	public static @NotNull Date adicionarDias(Date data, int dias) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(data);
 		calendar.add(DAY_OF_MONTH, dias);
@@ -26,8 +31,8 @@ public class DataUtils {
 	}
 	
 	/**
-	 * Retorna a data atual com a diferenca de dias enviados por parametro
-	 * 		a Data pode estar no futuro (parametro positivo) ou no passado (parametro negativo)
+	 * Retorna a data atual com a diferença de dias enviados por parâmetro.
+	 * A Data pode estar no futuro (parâmetro positivo) ou no passado (parâmetro negativo).
 	 * 
 	 * @param dias Quantidade de dias a ser incrementado/decrementado
 	 * @return Data atualizada
@@ -37,12 +42,12 @@ public class DataUtils {
 	}
 	
 	/**
-	 * Retorna uma instância de <code>Date</code> refletindo os valores passados por parametro
+	 * Retorna uma instância de <code>Date</code> refletindo os valores passados por parâmetro.
 	 * 
-	 * @param dia
-	 * @param mes
-	 * @param ano
-	 * @return
+	 * @param dia O dia atual.
+	 * @param mes O mês atual.
+	 * @param ano O ano atual.
+	 * @return A data atualizada.
 	 */
 	public static Date obterData(int dia, int mes, int ano){
 		Calendar calendar = Calendar.getInstance();
@@ -56,9 +61,9 @@ public class DataUtils {
 	 * Verifica se uma data é igual a outra
 	 * 	Esta comparação considera apenas dia, mes e ano
 	 * 
-	 * @param data1
-	 * @param data2
-	 * @return
+	 * @param data1 A primeira data a ser verificada.
+	 * @param data2 A segunda data a ser verificada.
+	 * @return Valor boolean resultante da verificação.
 	 */
 	public static boolean isMesmaData(Date data1, Date data2) {
 		Calendar calendar1 = Calendar.getInstance();
@@ -75,7 +80,7 @@ public class DataUtils {
 	 * 
 	 * @param data Data a ser avaliada
 	 * @param diaSemana <code>true</code> caso seja o dia da semana desejado, <code>false</code> em caso contrário 
-	 * @return
+	 * @return Valor boolean resultante da verificação.
 	 */
 	public static boolean verificarDiaSemana(Date data, int diaSemana) {
 		Calendar calendar = Calendar.getInstance();

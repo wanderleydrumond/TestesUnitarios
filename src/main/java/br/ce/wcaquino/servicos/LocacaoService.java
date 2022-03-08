@@ -3,7 +3,9 @@ package br.ce.wcaquino.servicos;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
+import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import br.ce.wcaquino.utils.DataUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 
@@ -22,9 +24,9 @@ public class LocacaoService {
      * @param filme   O filme do qual deve ser feita a modificação.
      * @return A <code>Locacao</code> atualizada.
      */
-    public Locacao alugarFilme(Usuario usuario, Filme filme) throws Exception {
+    public Locacao alugarFilme(Usuario usuario, @NotNull Filme filme) throws Exception {
         if (filme.getEstoque() == 0) {
-            throw new Exception("Não há este filme em estoque");
+            throw new FilmeSemEstoqueException();
         }
 
         Locacao locacao = new Locacao();

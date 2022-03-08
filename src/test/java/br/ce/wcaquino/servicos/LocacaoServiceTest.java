@@ -3,6 +3,7 @@ package br.ce.wcaquino.servicos;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
+import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
@@ -67,31 +68,6 @@ class LocacaoServiceTest {
         LocacaoService locacaoService = new LocacaoService();
 
 //		Then
-        Assertions.assertThrows(Exception.class, () -> locacaoService.alugarFilme(usuario, filme));
-    }
-
-    /**
-     * Este está esperando uma exceção.
-     * Solução robusta.
-     * <p>
-     * Além de capturar a exceção, é possível verificar a mensagem que vem da mesma.
-     */
-    @Test
-    public void filmeSemEstoqueRobusta() {
-
-//        Given
-        Usuario usuario = new Usuario("Wanderley");
-        Filme filme = new Filme("Mother", 0, 5.);
-        Date date = new Date();
-        LocacaoService locacaoService = new LocacaoService();
-
-//		Then
-        try {
-            locacaoService.alugarFilme(usuario, filme);
-            Assertions.fail("Exceção deveria ter sido lançada"); // Força o teste a falhar
-        } catch (Exception exception) {
-            MatcherAssert.assertThat(exception.getMessage(), CoreMatchers.is("Não há este filme em estoque"));
-//            exception.printStackTrace();
-        }
+        Assertions.assertThrows(FilmeSemEstoqueException.class, () -> locacaoService.alugarFilme(usuario, filme)); // Visto que há uma exceção específica, a solução elegante se tornou completa. Deixando a robusta obsoleta.
     }
 }

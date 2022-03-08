@@ -2,32 +2,33 @@ package br.ce.wcaquino.entidades;
 
 public class Usuario {
 
-	private String nome;
-	
-	public Usuario() {}
-	
-	public Usuario(String nome) {
-		this.nome = nome;
-	}
+    private String nome;
 
-	public String getNome() {
-		return nome;
-	}
+    public Usuario() {
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public Usuario(String nome) {
+        this.nome = nome;
+    }
 
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) return true;
-		if (!(object instanceof Usuario usuario)) return false;
+    public String getNome() {
+        return nome;
+    }
 
-		return nome.equals(usuario.nome);
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	@Override
-	public int hashCode() {
-		return nome.hashCode();
-	}
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Usuario usuario)) return false;
+
+        return nome.equals(usuario.nome);
+    }
+
+    @Override
+    public int hashCode() {
+        return nome.hashCode();
+    }
 }

@@ -22,7 +22,11 @@ public class LocacaoService {
      * @param filme   O filme do qual deve ser feita a modificação.
      * @return A <code>Locacao</code> atualizada.
      */
-    public Locacao alugarFilme(Usuario usuario, Filme filme) {
+    public Locacao alugarFilme(Usuario usuario, Filme filme) throws Exception {
+        if (filme.getEstoque() == 0) {
+            throw new Exception("Não há este filme em estoque");
+        }
+
         Locacao locacao = new Locacao();
         locacao.setFilme(filme);
         locacao.setUsuario(usuario);
@@ -59,7 +63,12 @@ public class LocacaoService {
         LocacaoService locacaoService = new LocacaoService();
 
 //		When
-        Locacao locacao = locacaoService.alugarFilme(usuario, filme);
+        Locacao locacao = null;
+        try {
+            locacao = locacaoService.alugarFilme(usuario, filme);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 //		Then
         System.out.println(5. == locacao.getValor()); // Verifica o preço da locação

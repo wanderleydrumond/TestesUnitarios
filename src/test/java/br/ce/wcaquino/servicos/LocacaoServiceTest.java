@@ -8,24 +8,22 @@ import br.ce.wcaquino.exceptions.LocadoraException;
 import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static br.ce.wcaquino.utils.DataUtils.isMesmaData;
 import static br.ce.wcaquino.utils.DataUtils.obterDataComDiferencaDias;
 
 class LocacaoServiceTest {
-    SoftAssertions softAssertions;
-    LocacaoService locacaoService;
+    private SoftAssertions softAssertions;
+    private LocacaoService locacaoService;
 
     /**
      * Visto que há mais de um teste utilizando soft assertions, eu garanti que, para cada teste, uma nova instância é criada.
      */
     @BeforeEach
     void setUp() {
-        locacaoService = new LocacaoService();
         softAssertions = new SoftAssertions();
+        locacaoService = new LocacaoService();
     }
 
     /**

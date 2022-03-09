@@ -4,6 +4,7 @@ import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
+import br.ce.wcaquino.exceptions.LocadoraException;
 import br.ce.wcaquino.utils.DataUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +25,11 @@ public class LocacaoService {
      * @param filme   O filme do qual deve ser feita a modificação.
      * @return A <code>Locacao</code> atualizada.
      */
-    public Locacao alugarFilme(Usuario usuario, @NotNull Filme filme) throws Exception {
+    public Locacao alugarFilme(Usuario usuario, @NotNull Filme filme) throws FilmeSemEstoqueException, LocadoraException {
+        if (usuario == null) {
+            throw new LocadoraException("Usuário vazio");
+        }
+
         if (filme.getEstoque() == 0) {
             throw new FilmeSemEstoqueException();
         }

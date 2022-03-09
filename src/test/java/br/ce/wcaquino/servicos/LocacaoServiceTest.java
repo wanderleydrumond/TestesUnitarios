@@ -32,7 +32,7 @@ class LocacaoServiceTest {
      * @throws Exception exceção que fará o teste dar erro.
      */
     @Test
-    void main() throws Exception {
+    void testeLocacao() throws Exception {
 //      Given
         Usuario usuario = new Usuario("Wanderley");
         Filme filme = new Filme("Mother", 1, 5.);

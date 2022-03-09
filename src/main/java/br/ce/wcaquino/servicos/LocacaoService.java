@@ -8,7 +8,11 @@ import br.ce.wcaquino.exceptions.LocadoraException;
 import br.ce.wcaquino.utils.DataUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static br.ce.wcaquino.utils.DataUtils.adicionarDias;
 
@@ -18,27 +22,85 @@ import static br.ce.wcaquino.utils.DataUtils.adicionarDias;
 public class LocacaoService {
 
     protected Date dataLocacao = new Date(); // Modificador de acesso protected para poder ter acesso na classe de teste.
+
     /**
-     * Atualiza os valores da locação para o usuário e filme passados por parâmetro.
+     * Inicializa o sistema.
+     *
+     * @param args Argumento padrão do método main.
+     */
+    public static void main(String[] args) {
+//		Given
+        Usuario usuario = new Usuario("Wanderley");
+        Filme filme1 = new Filme("Mother", 1, 5.);
+        Filme filme2 = new Filme("Matrix", 2, 7.);
+        Filme filme3 = new Filme("Interestelar", 4, 6.5);
+        List<Filme> filmes = new ArrayList<>(Arrays.asList(filme1, filme2, filme3));
+        LocacaoService locacaoService = new LocacaoService();
+
+//		When
+        Locacao locacao = null;
+        try {
+            locacao = locacaoService.alugarFilme(usuario, filmes);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+//		Then
+        // Verifica o preço da locação
+        for (Filme filmeElement : filmes) {
+            if (filmeElement.getPrecoLocacao() == 5. || filmeElement.getPrecoLocacao() == 6.5 || filmeElement.getPrecoLocacao() == 7.) {
+                System.out.println(true);
+            }
+        }
+        assert locacao != null;
+        System.out.println(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date())); // Verifica a data da locação
+        System.out.println(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1))); // Verifica a data de retorno da locação
+    }
+
+    /**
+     * Atualiza os valores da locação para o usuário e a lista de filmes passados por parâmetro.
      *
      * @param usuario O usuário do qual deve ser feita a modificação.
-     * @param filme   O filme do qual deve ser feita a modificação.
+     * @param filmes  A lista de filmes do qual deve ser feita a modificação.
      * @return A <code>Locacao</code> atualizada.
      */
-    public Locacao alugarFilme(Usuario usuario, @NotNull Filme filme) throws FilmeSemEstoqueException, LocadoraException {
+    public Locacao alugarFilme(Usuario usuario, @NotNull List<Filme> filmes) throws FilmeSemEstoqueException, LocadoraException {
         if (usuario == null) {
             throw new LocadoraException("Usuário vazio");
         }
 
-        if (filme.getEstoque() == 0) {
+        if (filmes.isEmpty()) {
             throw new FilmeSemEstoqueException();
         }
 
+        for (Filme filmeElemento : filmes) {
+            if (filmeElemento.getEstoque() == 0) {
+                throw new FilmeSemEstoqueException();
+            }
+        }
+
         Locacao locacao = new Locacao();
-        locacao.setFilme(filme);
+        locacao.setFilmes(filmes);
         locacao.setUsuario(usuario);
         locacao.setDataLocacao(dataLocacao);
-        locacao.setValor(filme.getPrecoLocacao());
+//        AtomicReference<Double> somaValorLocacoes = new AtomicReference<>(0.);
+        Double valorTotal = 0.;
+
+        for (Filme filmeElemento : filmes) {
+            valorTotal += filmeElemento.getPrecoLocacao();
+        }
+        locacao.setValor(valorTotal);
+
+        /*filmes.forEach(filmeElemento -> {
+            if (filmeElemento.getEstoque() == 0) {
+                try {
+                    throw new FilmeSemEstoqueException();
+                } catch (FilmeSemEstoqueException filmeSemEstoqueException) {
+                    filmeSemEstoqueException.printStackTrace();
+                }
+            }
+            somaValorLocacoes.updateAndGet(somaTemporaria -> somaTemporaria + filmeElemento.getPrecoLocacao());
+        });*/
 
         //Entrega no dia seguinte
         Date dataEntrega = new Date();
@@ -56,30 +118,5 @@ public class LocacaoService {
          * Timely -> O teste deve ser criado no momento certo.*/
 
         return locacao;
-    }
-
-    /**
-     * Inicializa o sistema.
-     *
-     * @param args Argumento padrão do método main.
-     */
-    public static void main(String[] args) {
-//		Given
-        Usuario usuario = new Usuario("Wanderley");
-        Filme filme = new Filme("Mother", 1, 5.);
-        LocacaoService locacaoService = new LocacaoService();
-
-//		When
-        Locacao locacao = null;
-        try {
-            locacao = locacaoService.alugarFilme(usuario, filme);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-//		Then
-        System.out.println(5. == locacao.getValor()); // Verifica o preço da locação
-        System.out.println(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date())); // Verifica a data da locação
-        System.out.println(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1))); // Verifica a data de retorno da locação
     }
 }

@@ -1,15 +1,46 @@
 package br.ce.wcaquino;
 
 import br.ce.wcaquino.entidades.Usuario;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 public class AssertTest {
+    /**
+     * Para que a instância se permaneça para ser utilizada em todos os métodos é necessário que os atributos sejam estáticos.
+     */
+    private static int incrementador, decrementador;
 
+    /**
+     * Este método é executado antes da instanciação de cada método.
+     */
     @BeforeEach
-    void setUp() {
+    void setUpEach() {
+        System.out.println("Incrementador: " + ++incrementador);
     }
+
+    /**
+     * Este método é executado depois da instanciação de cada método.
+     */
+    @AfterEach
+    void tearDownEach() {
+        System.out.println("Decrementador: " + --decrementador);
+    }
+
+    /**
+     * Este método é executado antes da instanciação da classe.
+     */
+    @BeforeAll
+    static void afterAll() {
+        System.out.println("Incrementador: " + (incrementador = 0) + "\n" + "Decrementador: " + (decrementador = 0));
+    }
+
+    /**
+     * Este método é executado depois da instanciação da classe.
+     */
+    @AfterAll
+    static void tearDownAll() {
+        System.out.println("Incrementador: " + incrementador * 10 + "\n" + "Decrementador: " + decrementador * 10);
+    }
+
     @Test
     public void verificarVerdade() {
 //        Verifica se o valor é true

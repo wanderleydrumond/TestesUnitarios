@@ -111,7 +111,7 @@ public class LocacaoService {
         //TODO adicionar método para salvar
 
         /*Princípios dos testes unitários
-         * Fast -> os resultados precisam ser exibidos imediatamente
+         * Fast -> os resultados precisam ser exibidos imediatamente para garantir que sempre serão executados no momento correto.
          * Independent -> Tudo o que o teste precisa para executar já está nele. || Isolate -> Cada teste é responsável por encontrar uma única falha isoladamente.
          * Repeatable -> O teste precisa executar quantas vezes forem necessárias e exibir sempre o mesmo resultado.
          * Self-Verifying -> O teste deve ser capaz de verificar quando sua execução foi correta ou quando a mesma falhou ou deu erro.

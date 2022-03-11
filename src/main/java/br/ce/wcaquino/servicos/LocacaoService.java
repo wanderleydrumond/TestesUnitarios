@@ -71,15 +71,11 @@ public class LocacaoService {
             throw new FilmeSemEstoqueException();
         }
 
-        filmes.forEach(filmeElemento -> {
+        for (Filme filmeElemento : filmes) {
             if (filmeElemento.getEstoque() == 0) {
-                try {
-                    throw new FilmeSemEstoqueException();
-                } catch (FilmeSemEstoqueException filmeSemEstoqueException) {
-                    filmeSemEstoqueException.printStackTrace();
-                }
+                throw new FilmeSemEstoqueException();
             }
-        });
+        }
 
         Locacao locacao = new Locacao();
         locacao.setFilmes(filmes);

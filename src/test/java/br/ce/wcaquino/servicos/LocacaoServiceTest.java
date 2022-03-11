@@ -11,6 +11,7 @@ import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -236,6 +237,7 @@ class LocacaoServiceTest {
      * @throws LocadoraException quando <code>Usuario</code> for igual a nulo.
      */
     @Test
+    @Disabled
     public void deveDevolverNaSegundaAoAlugarNoSabado() throws FilmeSemEstoqueException, LocadoraException {
 //        Given
         Usuario usuario = new Usuario("Wanderley");

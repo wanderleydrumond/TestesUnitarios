@@ -8,11 +8,7 @@ import br.ce.wcaquino.exceptions.LocadoraException;
 import br.ce.wcaquino.utils.DataUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.*;
 
 import static br.ce.wcaquino.utils.DataUtils.adicionarDias;
 
@@ -31,10 +27,16 @@ public class LocacaoService {
     public static void main(String[] args) {
 //		Given
         Usuario usuario = new Usuario("Wanderley");
+
         Filme filme1 = new Filme("Mother", 1, 5.);
         Filme filme2 = new Filme("Matrix", 2, 7.);
         Filme filme3 = new Filme("Interestelar", 4, 6.5);
-        List<Filme> filmes = new ArrayList<>(Arrays.asList(filme1, filme2, filme3));
+        Filme filme4 = new Filme("The Conjuring", 6, 10.);
+        Filme filme5 = new Filme("The Day the Earth Stood Still", 5, 10.);
+        Filme filme6 = new Filme("Midsommar", 1, 10.);
+
+        List<Filme> filmes = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4, filme5, filme6));
+
         LocacaoService locacaoService = new LocacaoService();
 
 //		When
@@ -48,7 +50,7 @@ public class LocacaoService {
 //		Then
         // Verifica o preço da locação
         for (Filme filmeElement : filmes) {
-            if (filmeElement.getPrecoLocacao() == 5. || filmeElement.getPrecoLocacao() == 6.5 || filmeElement.getPrecoLocacao() == 7.) {
+            if (filmeElement.getPrecoLocacao() == 5. || filmeElement.getPrecoLocacao() == 6.5 || filmeElement.getPrecoLocacao() == 7. || filmeElement.getPrecoLocacao() == 10.) {
                 System.out.println(true);
             }
         }
@@ -79,19 +81,7 @@ public class LocacaoService {
             }
         }
 
-        Locacao locacao = new Locacao();
-        locacao.setFilmes(filmes);
-        locacao.setUsuario(usuario);
-        locacao.setDataLocacao(dataLocacao);
-//        AtomicReference<Double> somaValorLocacoes = new AtomicReference<>(0.);
-        Double valorTotal = 0.;
-
-        for (Filme filmeElemento : filmes) {
-            valorTotal += filmeElemento.getPrecoLocacao();
-        }
-        locacao.setValor(valorTotal);
-
-        /*filmes.forEach(filmeElemento -> {
+        filmes.forEach(filmeElemento -> {
             if (filmeElemento.getEstoque() == 0) {
                 try {
                     throw new FilmeSemEstoqueException();
@@ -99,12 +89,35 @@ public class LocacaoService {
                     filmeSemEstoqueException.printStackTrace();
                 }
             }
-            somaValorLocacoes.updateAndGet(somaTemporaria -> somaTemporaria + filmeElemento.getPrecoLocacao());
-        });*/
+        });
+
+        Locacao locacao = new Locacao();
+        locacao.setFilmes(filmes);
+        locacao.setUsuario(usuario);
+        locacao.setDataLocacao(dataLocacao);
+
+        Double valorTotal = 0., auxiliar;
+        int index = 0;
+
+        for (Filme filmeElemento : filmes) {
+            auxiliar = switch (index) {
+                case 2 -> filmes.get(index).getPrecoLocacao() * 75 / 100;
+                case 3 -> filmes.get(index).getPrecoLocacao() * 50 / 100;
+                case 4 -> filmes.get(index).getPrecoLocacao() * 25 / 100;
+                case 5 -> 0.;
+                default -> filmeElemento.getPrecoLocacao();
+            };
+            valorTotal += auxiliar;
+            index++;
+        }
+        locacao.setValor(valorTotal);
 
         //Entrega no dia seguinte
         Date dataEntrega = new Date();
         dataEntrega = adicionarDias(dataEntrega, 1);
+        if (DataUtils.verificarDiaSemana(dataEntrega, Calendar.SUNDAY)) {
+            dataEntrega = adicionarDias(dataEntrega, 1);
+        }
         locacao.setDataRetorno(dataEntrega);
 
         //Salvando a locação...

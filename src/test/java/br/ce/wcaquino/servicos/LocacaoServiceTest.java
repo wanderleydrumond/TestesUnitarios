@@ -9,15 +9,9 @@ import br.ce.wcaquino.utils.DataUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -48,6 +42,8 @@ class LocacaoServiceTest {
     @Test
     void testeLocacaoBemSucedida() throws Exception {
 //      Given
+        Assumptions.assumeFalse(DataUtils.verificarDiaSemana(new Date(),Calendar.SATURDAY)); // Verifica se hoje não é sábado
+
         filme1 = new Filme("Mother", 1, 5.);
         filme2 = new Filme("Matrix", 2, 7.);
         filme3 = new Filme("Interestelar", 4, 6.5);
@@ -237,9 +233,10 @@ class LocacaoServiceTest {
      * @throws LocadoraException quando <code>Usuario</code> for igual a nulo.
      */
     @Test
-    @Disabled
     public void deveDevolverNaSegundaAoAlugarNoSabado() throws FilmeSemEstoqueException, LocadoraException {
 //        Given
+        Assumptions.assumeTrue(DataUtils.verificarDiaSemana(new Date(),Calendar.SATURDAY)); // Verifica se hoje é sábado
+
         Usuario usuario = new Usuario("Wanderley");
         List<Filme> filmes = List.of(new Filme("Mother",1,5.));
 //        When

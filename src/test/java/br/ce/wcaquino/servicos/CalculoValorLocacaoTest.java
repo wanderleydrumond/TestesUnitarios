@@ -8,6 +8,7 @@ import br.ce.wcaquino.exceptions.LocadoraException;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -69,7 +70,8 @@ public class CalculoValorLocacaoTest {
      */
     @ParameterizedTest
     @MethodSource("getFilmes")
-    public void deveCalcularValorLocacaoConsiderandoDescontosComProblemas() throws FilmeSemEstoqueException, LocadoraException {
+    @Disabled
+    public void deveCalcularValorLocaçãoConsiderandoDescontosComProblemas() throws FilmeSemEstoqueException, LocadoraException {
 //        Given
         Usuario usuario = new Usuario("Wanderley");
 

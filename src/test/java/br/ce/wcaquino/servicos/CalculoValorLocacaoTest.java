@@ -1,0 +1,114 @@
+package br.ce.wcaquino.servicos;
+
+import br.ce.wcaquino.entidades.Filme;
+import br.ce.wcaquino.entidades.Locacao;
+import br.ce.wcaquino.entidades.Usuario;
+import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
+import br.ce.wcaquino.exceptions.LocadoraException;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Classe que contém um único teste que executa na mesma incidência quanto o número de parâmetros definidos.
+ */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class CalculoValorLocacaoTest {
+    private static Filme filme1 = new Filme("Mother", 1, 10.);
+    private static Filme filme2 = new Filme("Matrix", 2, 10.);
+    private static Filme filme3 = new Filme("Interestelar", 4, 10.);
+    private static Filme filme4 = new Filme("The Conjuring", 6, 10.);
+    private static Filme filme5 = new Filme("The Day the Earth Stood Still", 5, 10.);
+    private static Filme filme6 = new Filme("Midsommar", 1, 10.);
+
+    private LocacaoService locacaoService;
+
+    private Integer índice = 0;
+    private Double valorTotalLocacao = filme1.getPrecoLocacao() + filme2.getPrecoLocacao();
+
+    /**
+     * Prepara o ambiente antes da execução de cada teste parametrizado.
+     */
+    @BeforeEach
+    public void setup() {
+        locacaoService = new LocacaoService();
+    }
+
+    /**
+     * Método que servirá de fonte para carregar os dados do teste parametrizado.
+     *
+     * @return a lista de listas de filmes
+     */
+    public List<List<Filme>> getFilmes() {
+        List<Filme> filmes1 = new ArrayList<>(Arrays.asList(filme1, filme2, filme3));
+        List<Filme> filmes2 = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4));
+        List<Filme> filmes3 = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4, filme5));
+        List<Filme> filmes4 = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4, filme5, filme6));
+        List<List<Filme>> listaDeFilmes = new ArrayList<>(Arrays.asList(filmes1, filmes2, filmes3, filmes4));
+        return listaDeFilmes;
+    }
+
+    /**
+     * Esse teste funciona, mas ele é executado quatro vezes mais. Deixei só por causa do forEach.
+     * TODO Apagar este método
+     *
+     * @throws FilmeSemEstoqueException quando algum item da lista de filmes tiver estoque igual a 0.
+     * @throws LocadoraException quando <code>Usuario</code> for igual a nulo.
+     */
+    @ParameterizedTest
+    @MethodSource("getFilmes")
+    public void deveCalcularValorLocacaoConsiderandoDescontosComProblemas() throws FilmeSemEstoqueException, LocadoraException {
+//        Given
+        Usuario usuario = new Usuario("Wanderley");
+
+//        When
+        Integer index = 0;
+        Double valorLocacao = filme1.getPrecoLocacao() + filme2.getPrecoLocacao();
+
+        for (List<Filme> listasElemento : getFilmes()) {
+            Locacao locacao = locacaoService.alugarFilme(usuario, listasElemento);
+            switch (index) {
+                case 0 -> valorLocacao += filme3.getPrecoLocacao() * 75 / 100;
+                case 1 -> valorLocacao += filme3.getPrecoLocacao() * 50 / 100;
+                case 2 -> valorLocacao += filme3.getPrecoLocacao() * 25 / 100;
+            }
+
+            MatcherAssert.assertThat(locacao.getValor(), CoreMatchers.is(valorLocacao));
+
+            index++;
+        }
+    }
+
+    /**
+     * Teste que executa várias vezes seguindo os parâmetros determinados.
+     *
+     * @throws FilmeSemEstoqueException quando algum item da lista de filmes tiver estoque igual a 0.
+     * @throws LocadoraException quando <code>Usuario</code> for igual a nulo.
+     */
+    @ParameterizedTest
+    @MethodSource("getFilmes")
+    public void deveCalcularValorLocacaoConsiderandoDescontos() throws FilmeSemEstoqueException, LocadoraException {
+//        Given
+        Usuario usuario = new Usuario("Wanderley");
+
+//        When
+        List<Filme> filmes = new ArrayList<>(getFilmes().get(índice));
+        Locacao locacao = locacaoService.alugarFilme(usuario, filmes);
+        switch (índice) {
+            case 0 -> valorTotalLocacao += filme3.getPrecoLocacao() * 75 / 100;
+            case 1 -> valorTotalLocacao += filme3.getPrecoLocacao() * 50 / 100;
+            case 2 -> valorTotalLocacao += filme3.getPrecoLocacao() * 25 / 100;
+        }
+
+//        Then
+        MatcherAssert.assertThat(locacao.getValor(), CoreMatchers.is(valorTotalLocacao));
+        índice++;
+    }
+}

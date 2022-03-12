@@ -19,7 +19,7 @@ import static br.ce.wcaquino.utils.DataUtils.isMesmaData;
 import static br.ce.wcaquino.utils.DataUtils.obterDataComDiferencaDias;
 
 class LocacaoServiceTest {
-    List<Filme> filmes;
+    private List<Filme> filmes;
     private SoftAssertions softAssertions;
     private LocacaoService locacaoService;
     private Filme filme1, filme2, filme3;
@@ -53,13 +53,13 @@ class LocacaoServiceTest {
 
         AtomicReference<Double> soma = new AtomicReference<>(0.);
         AtomicInteger índice = new AtomicInteger();
-        /*int index = 0;
+        /*int index = 0; TODO Apagar esta declaração
         Double somatório = 0.;*/
 
 //		When
         Locacao locacao = locacaoService.alugarFilme(usuario, filmes);
 
-//        Solução utilizando forEach convencional
+//        Solução utilizando forEach convencional. TODO Apagar esta solução
         /*for (Filme filmeElemento : filmes) {
             if (index == 2) {
                 filmes.get(index).setPrecoLocacao(filmeElemento.getPrecoLocacao() * 75 / 100);
@@ -130,100 +130,6 @@ class LocacaoServiceTest {
             MatcherAssert.assertThat(locadoraException.getMessage(), CoreMatchers.is("Usuário vazio"));
 //            locadoraException.printStackTrace();
         }
-    }
-
-    /**
-     * Deve aplicar desconto de 25% no valor do terceiro filme na mesma locação.
-     *
-     * @throws FilmeSemEstoqueException quando algum item da lista de filmes tiver estoque igual a 0.
-     * @throws LocadoraException quando <code>Usuario</code> for igual a nulo.
-     */
-    @Test
-    public void devePagar75Filme3() throws FilmeSemEstoqueException, LocadoraException {
-//        Given
-        Usuario usuario = new Usuario("Wanderley");
-
-        filme1 = new Filme("Mother", 1, 10.);
-        filme2 = new Filme("Matrix", 2, 10.);
-        filme3 = new Filme("Interestelar", 4, 10.);
-        filmes = new ArrayList<>(Arrays.asList(filme1, filme2, filme3));
-
-//        When
-        Locacao locacao = locacaoService.alugarFilme(usuario,filmes);
-//        Then
-        MatcherAssert.assertThat(locacao.getValor(), CoreMatchers.is(27.5));
-    }
-
-    /**
-     * Deve aplicar desconto cumulativo de 50% no valor do terceiro filme na mesma locação.
-     *
-     * @throws FilmeSemEstoqueException quando algum item da lista de filmes tiver estoque igual a 0.
-     * @throws LocadoraException quando <code>Usuario</code> for igual a nulo.
-     */
-    @Test
-    public void devePagar50Filme4() throws FilmeSemEstoqueException, LocadoraException {
-//        Given
-        Usuario usuario = new Usuario("Wanderley");
-
-        filme1 = new Filme("Mother", 1, 10.);
-        filme2 = new Filme("Matrix", 2, 10.);
-        filme3 = new Filme("Interestelar", 4, 10.);
-        Filme filme4 = new Filme("The Conjuring", 6, 10.);
-        filmes = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4));
-
-//        When
-        Locacao locacao = locacaoService.alugarFilme(usuario,filmes);
-//        Then
-        MatcherAssert.assertThat(locacao.getValor(), CoreMatchers.is(32.5));
-    }
-
-    /**
-     * Deve aplicar desconto cumulativo de 75% no valor do quinto filme na mesma locação.
-     *
-     * @throws FilmeSemEstoqueException quando algum item da lista de filmes tiver estoque igual a 0.
-     * @throws LocadoraException quando <code>Usuario</code> for igual a nulo.
-     */
-    @Test
-    public void devePagar75Filme5() throws FilmeSemEstoqueException, LocadoraException {
-//        Given
-        Usuario usuario = new Usuario("Wanderley");
-
-        filme1 = new Filme("Mother", 1, 10.);
-        filme2 = new Filme("Matrix", 2, 10.);
-        filme3 = new Filme("Interestelar", 4, 10.);
-        Filme filme4 = new Filme("The Conjuring", 6, 10.);
-        Filme filme5 = new Filme("The Day the Earth Stood Still", 5, 10.);
-        filmes = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4, filme5));
-
-//        When
-        Locacao locacao = locacaoService.alugarFilme(usuario,filmes);
-//        Then
-        MatcherAssert.assertThat(locacao.getValor(), CoreMatchers.is(35.));
-    }
-
-    /**
-     * Deve aplicar desconto cumulativo de 100% no valor do sexto filme na mesma locação.
-     *
-     * @throws FilmeSemEstoqueException quando algum item da lista de filmes tiver estoque igual a 0.
-     * @throws LocadoraException quando <code>Usuario</code> for igual a nulo.
-     */
-    @Test
-    public void devePagar0Filme6() throws FilmeSemEstoqueException, LocadoraException {
-//        Given
-        Usuario usuario = new Usuario("Wanderley");
-
-        filme1 = new Filme("Mother", 1, 10.);
-        filme2 = new Filme("Matrix", 2, 10.);
-        filme3 = new Filme("Interestelar", 4, 10.);
-        Filme filme4 = new Filme("The Conjuring", 6, 10.);
-        Filme filme5 = new Filme("The Day the Earth Stood Still", 5, 10.);
-        Filme filme6 = new Filme("Midsommar", 1, 10.);
-        filmes = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4, filme5, filme6));
-
-//        When
-        Locacao locacao = locacaoService.alugarFilme(usuario,filmes);
-//        Then
-        MatcherAssert.assertThat(locacao.getValor(), CoreMatchers.is(35.));
     }
 
     /**

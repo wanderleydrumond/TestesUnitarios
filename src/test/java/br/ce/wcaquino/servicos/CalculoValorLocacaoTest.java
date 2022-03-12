@@ -21,14 +21,18 @@ import java.util.List;
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CalculoValorLocacaoTest {
-    private static Filme filme1 = new Filme("Mother", 1, 10.);
-    private static Filme filme2 = new Filme("Matrix", 2, 10.);
-    private static Filme filme3 = new Filme("Interestelar", 4, 10.);
-    private static Filme filme4 = new Filme("The Conjuring", 6, 10.);
-    private static Filme filme5 = new Filme("The Day the Earth Stood Still", 5, 10.);
-    private static Filme filme6 = new Filme("Midsommar", 1, 10.);
+    private static final Filme filme1 = new Filme("Mother", 1, 10.);
+    private static final Filme filme2 = new Filme("Matrix", 2, 10.);
+    private static final Filme filme3 = new Filme("Interestelar", 4, 10.);
+    private static final Filme filme4 = new Filme("The Conjuring", 6, 10.);
+    private static final Filme filme5 = new Filme("The Day the Earth Stood Still", 5, 10.);
+    private static final Filme filme6 = new Filme("Midsommar", 1, 10.);
 
-    private LocacaoService locacaoService;
+    private LocacaoService locaçãoService;
+
+    Usuario usuário = new Usuario("Wanderley");
+
+    List<Filme> filmes;
 
     private Integer índice = 0;
     private Double valorTotalLocacao = filme1.getPrecoLocacao() + filme2.getPrecoLocacao();
@@ -38,7 +42,9 @@ public class CalculoValorLocacaoTest {
      */
     @BeforeEach
     public void setup() {
-        locacaoService = new LocacaoService();
+//        Given
+        locaçãoService = new LocacaoService();
+        filmes = new ArrayList<>(getFilmes().get(índice));
     }
 
     /**
@@ -51,8 +57,7 @@ public class CalculoValorLocacaoTest {
         List<Filme> filmes2 = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4));
         List<Filme> filmes3 = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4, filme5));
         List<Filme> filmes4 = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4, filme5, filme6));
-        List<List<Filme>> listaDeFilmes = new ArrayList<>(Arrays.asList(filmes1, filmes2, filmes3, filmes4));
-        return listaDeFilmes;
+        return new ArrayList<>(Arrays.asList(filmes1, filmes2, filmes3, filmes4));
     }
 
     /**
@@ -69,11 +74,11 @@ public class CalculoValorLocacaoTest {
         Usuario usuario = new Usuario("Wanderley");
 
 //        When
-        Integer index = 0;
-        Double valorLocacao = filme1.getPrecoLocacao() + filme2.getPrecoLocacao();
+        int index = 0;
+        double valorLocacao = filme1.getPrecoLocacao() + filme2.getPrecoLocacao();
 
         for (List<Filme> listasElemento : getFilmes()) {
-            Locacao locacao = locacaoService.alugarFilme(usuario, listasElemento);
+            Locacao locacao = locaçãoService.alugarFilme(usuario, listasElemento);
             switch (index) {
                 case 0 -> valorLocacao += filme3.getPrecoLocacao() * 75 / 100;
                 case 1 -> valorLocacao += filme3.getPrecoLocacao() * 50 / 100;
@@ -95,12 +100,8 @@ public class CalculoValorLocacaoTest {
     @ParameterizedTest
     @MethodSource("getFilmes")
     public void deveCalcularValorLocacaoConsiderandoDescontos() throws FilmeSemEstoqueException, LocadoraException {
-//        Given
-        Usuario usuario = new Usuario("Wanderley");
-
 //        When
-        List<Filme> filmes = new ArrayList<>(getFilmes().get(índice));
-        Locacao locacao = locacaoService.alugarFilme(usuario, filmes);
+        Locacao locacao = locaçãoService.alugarFilme(usuário, filmes);
         switch (índice) {
             case 0 -> valorTotalLocacao += filme3.getPrecoLocacao() * 75 / 100;
             case 1 -> valorTotalLocacao += filme3.getPrecoLocacao() * 50 / 100;

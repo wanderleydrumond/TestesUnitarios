@@ -36,7 +36,7 @@ public class CalculoValorLocacaoTest {
     List<Filme> filmes;
 
     private Integer índice = 0;
-    private Double valorTotalLocacao = filme1.getPrecoLocacao() + filme2.getPrecoLocacao();
+    private Double valorTotalLocação = filme1.getPrecoLocacao() + filme2.getPrecoLocacao();
 
     /**
      * Prepara o ambiente antes da execução de cada teste parametrizado.
@@ -99,19 +99,19 @@ public class CalculoValorLocacaoTest {
      * @throws FilmeSemEstoqueException quando algum item da lista de filmes tiver estoque igual a 0.
      * @throws LocadoraException quando <code>Usuario</code> for igual a nulo.
      */
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index}º teste")
     @MethodSource("getFilmes")
     public void deveCalcularValorLocacaoConsiderandoDescontos() throws FilmeSemEstoqueException, LocadoraException {
 //        When
         Locacao locacao = locaçãoService.alugarFilme(usuário, filmes);
         switch (índice) {
-            case 0 -> valorTotalLocacao += filme3.getPrecoLocacao() * 75 / 100;
-            case 1 -> valorTotalLocacao += filme3.getPrecoLocacao() * 50 / 100;
-            case 2 -> valorTotalLocacao += filme3.getPrecoLocacao() * 25 / 100;
+            case 0 -> valorTotalLocação += filme3.getPrecoLocacao() * 75 / 100;
+            case 1 -> valorTotalLocação += filme3.getPrecoLocacao() * 50 / 100;
+            case 2 -> valorTotalLocação += filme3.getPrecoLocacao() * 25 / 100;
         }
 
 //        Then
-        MatcherAssert.assertThat(locacao.getValor(), CoreMatchers.is(valorTotalLocacao));
+        MatcherAssert.assertThat(locacao.getValor(), CoreMatchers.is(valorTotalLocação));
         índice++;
     }
 }

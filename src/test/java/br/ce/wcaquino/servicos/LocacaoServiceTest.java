@@ -5,12 +5,15 @@ import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import br.ce.wcaquino.exceptions.LocadoraException;
-import br.ce.wcaquino.matchers.DiaSemanaMatcher;
+import br.ce.wcaquino.matchers.MatchersPróprios;
 import br.ce.wcaquino.utils.DataUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -43,7 +46,7 @@ class LocacaoServiceTest {
     @Test
     void testeLocacaoBemSucedida() throws Exception {
 //      Given
-        Assumptions.assumeFalse(DataUtils.verificarDiaSemana(new Date(),Calendar.SATURDAY)); // Verifica se hoje não é sábado
+        Assumptions.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY)); // Verifica se hoje não é sábado
 
         filme1 = new Filme("Mother", 1, 5.);
         filme2 = new Filme("Matrix", 2, 7.);
@@ -137,20 +140,19 @@ class LocacaoServiceTest {
      * Se o filme for alugado no sábado, a devolução deve ser na segunda.
      *
      * @throws FilmeSemEstoqueException quando algum item da lista de filmes tiver estoque igual a 0.
-     * @throws LocadoraException quando <code>Usuario</code> for igual a nulo.
+     * @throws LocadoraException        quando <code>Usuario</code> for igual a nulo.
      */
     @Test
     public void deveDevolverNaSegundaAoAlugarNoSábado() throws FilmeSemEstoqueException, LocadoraException {
 //        Given
-        Assumptions.assumeTrue(DataUtils.verificarDiaSemana(new Date(),Calendar.SATURDAY)); // Verifica se hoje é sábado
+        Assumptions.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY)); // Verifica se hoje é sábado
 
         Usuario usuario = new Usuario("Wanderley");
-        List<Filme> filmes = List.of(new Filme("Mother",1,5.));
+        List<Filme> filmes = List.of(new Filme("Mother", 1, 5.));
 //        When
-        Locacao retorno = locacaoService.alugarFilme(usuario,filmes);
+        Locacao retorno = locacaoService.alugarFilme(usuario, filmes);
 //        Then
-        MatcherAssert.assertThat(retorno.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
-//        MatcherAssert.assertThat(retorno.getDataRetorno(), caiEm(Calendar.MONDAY));
-//        MatcherAssert.assertThat(retorno.getDataRetorno(), caiNumaSegunda());
+        MatcherAssert.assertThat(retorno.getDataRetorno(), MatchersPróprios.caiEm(Calendar.MONDAY)); // Abordagem 1
+        MatcherAssert.assertThat(retorno.getDataRetorno(), MatchersPróprios.caiNumaSegunda()); // Abordagem 2
     }
 }

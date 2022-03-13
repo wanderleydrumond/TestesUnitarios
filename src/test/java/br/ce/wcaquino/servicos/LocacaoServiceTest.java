@@ -5,6 +5,7 @@ import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import br.ce.wcaquino.exceptions.LocadoraException;
+import br.ce.wcaquino.matchers.DiaSemanaMatcher;
 import br.ce.wcaquino.utils.DataUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
@@ -139,7 +140,7 @@ class LocacaoServiceTest {
      * @throws LocadoraException quando <code>Usuario</code> for igual a nulo.
      */
     @Test
-    public void deveDevolverNaSegundaAoAlugarNoSabado() throws FilmeSemEstoqueException, LocadoraException {
+    public void deveDevolverNaSegundaAoAlugarNoSábado() throws FilmeSemEstoqueException, LocadoraException {
 //        Given
         Assumptions.assumeTrue(DataUtils.verificarDiaSemana(new Date(),Calendar.SATURDAY)); // Verifica se hoje é sábado
 
@@ -148,6 +149,8 @@ class LocacaoServiceTest {
 //        When
         Locacao retorno = locacaoService.alugarFilme(usuario,filmes);
 //        Then
-        Assertions.assertTrue(DataUtils.verificarDiaSemana(retorno.getDataRetorno(), Calendar.MONDAY));
+        MatcherAssert.assertThat(retorno.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
+//        MatcherAssert.assertThat(retorno.getDataRetorno(), caiEm(Calendar.MONDAY));
+//        MatcherAssert.assertThat(retorno.getDataRetorno(), caiNumaSegunda());
     }
 }

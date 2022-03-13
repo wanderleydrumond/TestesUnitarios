@@ -22,12 +22,12 @@ import java.util.List;
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CalculoValorLocacaoTest {
-    private static final Filme filme1 = new Filme("Mother", 1, 10.);
-    private static final Filme filme2 = new Filme("Matrix", 2, 10.);
-    private static final Filme filme3 = new Filme("Interestelar", 4, 10.);
-    private static final Filme filme4 = new Filme("The Conjuring", 6, 10.);
-    private static final Filme filme5 = new Filme("The Day the Earth Stood Still", 5, 10.);
-    private static final Filme filme6 = new Filme("Midsommar", 1, 10.);
+    private final Filme filme1 = new Filme("Mother", 1, 10.);
+    private final Filme filme2 = new Filme("Matrix", 2, 10.);
+    private final Filme filme3 = new Filme("Interestelar", 4, 10.);
+    private final Filme filme4 = new Filme("The Conjuring", 6, 10.);
+    private final Filme filme5 = new Filme("The Day the Earth Stood Still", 5, 10.);
+    private final Filme filme6 = new Filme("Midsommar", 1, 10.);
 
     Usuario usuário = new Usuario("Wanderley");
 

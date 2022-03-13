@@ -29,13 +29,18 @@ public class CalculoValorLocacaoTest {
     private static final Filme filme5 = new Filme("The Day the Earth Stood Still", 5, 10.);
     private static final Filme filme6 = new Filme("Midsommar", 1, 10.);
 
-    private LocacaoService locaçãoService;
-
     Usuario usuário = new Usuario("Wanderley");
 
     List<Filme> filmes;
 
+    private LocacaoService locaçãoService;
+    /**
+     * Incrementador para o teste <code>deveCalcularValorLocacaoConsiderandoDescontos</code>
+     */
     private Integer índice = 0;
+    /**
+     * Valor da locação utilizado no teste <code>deveCalcularValorLocacaoConsiderandoDescontos</code>
+     */
     private Double valorTotalLocação = filme1.getPrecoLocacao() + filme2.getPrecoLocacao();
 
     /**
@@ -66,7 +71,7 @@ public class CalculoValorLocacaoTest {
      * TODO Apagar este método
      *
      * @throws FilmeSemEstoqueException quando algum item da lista de filmes tiver estoque igual a 0.
-     * @throws LocadoraException quando <code>Usuario</code> for igual a nulo.
+     * @throws LocadoraException        quando <code>Usuario</code> for igual a nulo.
      */
     @ParameterizedTest
     @MethodSource("getFilmes")
@@ -97,11 +102,11 @@ public class CalculoValorLocacaoTest {
      * Teste que executa várias vezes seguindo os parâmetros determinados.
      *
      * @throws FilmeSemEstoqueException quando algum item da lista de filmes tiver estoque igual a 0.
-     * @throws LocadoraException quando <code>Usuario</code> for igual a nulo.
+     * @throws LocadoraException        quando <code>Usuario</code> for igual a nulo.
      */
     @ParameterizedTest(name = "{index}º teste")
     @MethodSource("getFilmes")
-    public void deveCalcularValorLocacaoConsiderandoDescontos() throws FilmeSemEstoqueException, LocadoraException {
+    public void deveCalcularValorLocaçãoConsiderandoDescontos() throws FilmeSemEstoqueException, LocadoraException {
 //        When
         Locacao locacao = locaçãoService.alugarFilme(usuário, filmes);
         switch (índice) {

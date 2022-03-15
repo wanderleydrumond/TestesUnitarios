@@ -22,7 +22,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import static br.ce.wcaquino.utils.DataUtils.isMesmaData;
 import static br.ce.wcaquino.utils.DataUtils.obterDataComDiferencaDias;
 
-class LocacaoServiceTest {
+/**
+ * Trata aspectos básicos de testes.
+ *
+ * @author Wanderley Drumond
+ * @since 05/03/2022
+ * @version 4.0
+ */
+class LocaçãoServiceTest {
     private List<Filme> filmes;
     private SoftAssertions softAssertions;
     private LocacaoService locacaoService;
@@ -44,7 +51,7 @@ class LocacaoServiceTest {
      * @throws Exception exceção que fará o teste dar erro.
      */
     @Test
-    void testeLocacaoBemSucedida() throws Exception {
+    void testeLocaçãoBemSucedida() throws Exception {
 //      Given
         Assumptions.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY)); // Verifica se hoje não é sábado
 
@@ -57,20 +64,9 @@ class LocacaoServiceTest {
 
         AtomicReference<Double> soma = new AtomicReference<>(0.);
         AtomicInteger índice = new AtomicInteger();
-        /*int index = 0; TODO Apagar esta declaração
-        Double somatório = 0.;*/
 
 //		When
         Locacao locacao = locacaoService.alugarFilme(usuario, filmes);
-
-//        Solução utilizando forEach convencional. TODO Apagar esta solução
-        /*for (Filme filmeElemento : filmes) {
-            if (index == 2) {
-                filmes.get(index).setPrecoLocacao(filmeElemento.getPrecoLocacao() * 75 / 100);
-            }
-            somatório += filmeElemento.getPrecoLocacao();
-            index++;
-        }*/
 
 //        Solução utilizando forEach com lambda
         filmes.forEach(filmeElemento -> {
@@ -83,7 +79,6 @@ class LocacaoServiceTest {
 
 //		Then
         softAssertions.assertThat(locacao.getValor()).as("Preço da locação incorreto").isEqualTo(soma.get().doubleValue());
-
         softAssertions.assertThat(locacao.getDataLocacao()).as("Data da locação incorreta").isEqualTo(locacaoService.dataLocacao);
         softAssertions.assertThat(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1))).isEqualTo(true);
 
@@ -139,7 +134,7 @@ class LocacaoServiceTest {
     /**
      * Se o filme for alugado no sábado, a devolução deve ser na segunda.
      *
-     * @throws FilmeSemEstoqueException quando algum item da lista de filmes tiver estoque igual a 0.
+     * @throws FilmeSemEstoqueException quando algum ‘item’ da lista de filmes tiver estoque igual a 0.
      * @throws LocadoraException        quando <code>Usuario</code> for igual a nulo.
      */
     @Test

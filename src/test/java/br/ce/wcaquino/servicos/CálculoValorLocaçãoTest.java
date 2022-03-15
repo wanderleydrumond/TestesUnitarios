@@ -8,7 +8,6 @@ import br.ce.wcaquino.exceptions.LocadoraException;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,10 +17,14 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Classe que contém um único teste que executa na mesma incidência quanto o número de parâmetros definidos.
+ * Classe que contém um único teste que executa na mesma incidência quanto o número de parâmetros definidos. <u>Teste parametrizado</u>
+ *
+ * @author Wanderley Drumond
+ * @since 12/03/2022
+ * @version 3.0
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class CalculoValorLocacaoTest {
+public class CálculoValorLocaçãoTest {
     private final Filme filme1 = new Filme("Mother", 1, 10.);
     private final Filme filme2 = new Filme("Matrix", 2, 10.);
     private final Filme filme3 = new Filme("Interestelar", 4, 10.);
@@ -64,38 +67,6 @@ public class CalculoValorLocacaoTest {
         List<Filme> filmes3 = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4, filme5));
         List<Filme> filmes4 = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4, filme5, filme6));
         return new ArrayList<>(Arrays.asList(filmes1, filmes2, filmes3, filmes4));
-    }
-
-    /**
-     * Esse teste funciona, mas ele é executado quatro vezes mais. Deixei só por causa do forEach.
-     * TODO Apagar este método
-     *
-     * @throws FilmeSemEstoqueException quando algum item da lista de filmes tiver estoque igual a 0.
-     * @throws LocadoraException        quando <code>Usuario</code> for igual a nulo.
-     */
-    @ParameterizedTest
-    @MethodSource("getFilmes")
-    @Disabled
-    public void deveCalcularValorLocaçãoConsiderandoDescontosComProblemas() throws FilmeSemEstoqueException, LocadoraException {
-//        Given
-        Usuario usuario = new Usuario("Wanderley");
-
-//        When
-        int index = 0;
-        double valorLocacao = filme1.getPrecoLocacao() + filme2.getPrecoLocacao();
-
-        for (List<Filme> listasElemento : getFilmes()) {
-            Locacao locacao = locaçãoService.alugarFilme(usuario, listasElemento);
-            switch (index) {
-                case 0 -> valorLocacao += filme3.getPrecoLocacao() * 75 / 100;
-                case 1 -> valorLocacao += filme3.getPrecoLocacao() * 50 / 100;
-                case 2 -> valorLocacao += filme3.getPrecoLocacao() * 25 / 100;
-            }
-
-            MatcherAssert.assertThat(locacao.getValor(), CoreMatchers.is(valorLocacao));
-
-            index++;
-        }
     }
 
     /**

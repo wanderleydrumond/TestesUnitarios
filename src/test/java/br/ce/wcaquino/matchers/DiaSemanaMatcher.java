@@ -11,6 +11,10 @@ import java.util.Locale;
 
 /**
  * Classe que implementa os métodos do matcher personalizado.
+ *
+ * @author Wanderley Drumond
+ * @version 1.0
+ * @since 12/03/2002
  */
 public class DiaSemanaMatcher extends TypeSafeMatcher<Date> {
 
@@ -21,10 +25,10 @@ public class DiaSemanaMatcher extends TypeSafeMatcher<Date> {
     }
 
     /**
-     * Verifica o dia da semana de acordo com um valor inteiro digitado ou vindo de um enumerador. Ex.: Calendar.MONDAY.
+     * Verifica o dia da semana de acordo com um valor inteiro digitado ou vindo de um enumerador. <p>Ex.: Calendar.MONDAY.</p>
      *
      * @param data A data que deverá ser comparada.
-     * @return o valor booleano caso a <code>data</code> seja corresponda ao <code>diaDaSemana</code>
+     * @return o valor <code>boolean</code> caso a <code>data</code> seja corresponda ao <code>diaDaSemana</code>
      */
     @Override
     protected boolean matchesSafely(Date data) {

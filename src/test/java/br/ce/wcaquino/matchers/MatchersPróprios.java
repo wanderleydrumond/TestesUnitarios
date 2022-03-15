@@ -1,9 +1,16 @@
 package br.ce.wcaquino.matchers;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Calendar;
 
 /**
  * Classe do qual pertencerão os métodos deste matcher personalizado.
+ *
+ * @author Wanderley Drumond
+ * @since 13/02/2022
+ * @version 1.5
  */
 public class MatchersPróprios {
     /**
@@ -12,7 +19,8 @@ public class MatchersPróprios {
      * @param diaSemana o qual deve ser verificado.
      * @return a data por extenso.
      */
-    public static DiaSemanaMatcher caiEm(Integer diaSemana) { // TODO Aceitar esta sugestão?
+    @Contract("_ -> new")
+    public static @NotNull DiaSemanaMatcher caiEm(Integer diaSemana) {
         return new DiaSemanaMatcher(diaSemana);
     }
 
@@ -21,7 +29,8 @@ public class MatchersPróprios {
      *
      * @return valor boolean.
      */
-    public static DiaSemanaMatcher caiNumaSegunda() { // TODO Aceitar esta sugestão?
+    @Contract(" -> new")
+    public static @NotNull DiaSemanaMatcher caiNumaSegunda() {
         return new DiaSemanaMatcher(Calendar.MONDAY);
     }
 }

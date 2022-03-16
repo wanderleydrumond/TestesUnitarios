@@ -35,7 +35,6 @@ class LocaçãoServiceTest {
     private List<Filme> filmes;
     private SoftAssertions softAssertions;
     private LocacaoService locacaoService;
-    private Filme filme1, filme2, filme3;
 
     /**
      * Visto que há mais de um teste utilizando <i>soft assertions</i>, eu garanti que, para cada teste, uma nova instância é criada.
@@ -57,9 +56,6 @@ class LocaçãoServiceTest {
 //      Given
         Assumptions.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY)); // Verifica se hoje não é sábado
 
-        filme1 = new Filme("Mother", 1, 5.);
-        filme2 = new Filme("Matrix", 2, 7.);
-        filme3 = new Filme("Interestelar", 4, 6.5);
         filmes = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora()));
 
         Usuario usuario = UsuárioBuilder.umUsuário().agora();
@@ -99,10 +95,6 @@ class LocaçãoServiceTest {
 //        Given
         Usuario usuario = UsuárioBuilder.umUsuário().agora();
         LocacaoService locacaoService = new LocacaoService();
-
-        filme1 = new Filme("Mother", 1, 5.);
-        filme2 = new Filme("Matrix", 0, 7.);
-        filme3 = new Filme("Interestelar", 4, 6.5);
         filmes = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilmeSemEstoque().agora(), FilmeBuilder.umFilme().semEstoque().agora())); // padrão chained method.
 
 //		Then
@@ -117,10 +109,6 @@ class LocaçãoServiceTest {
      */
     @Test
     public void naoDeveAlugarFilmesSemUsuario_Robusta() throws FilmeSemEstoqueException { // Deixo o JUnit tratar esta exceção
-//        Given
-        filme1 = new Filme("Mother", 1, 5.);
-        filme2 = new Filme("Matrix", 2, 7.);
-        filme3 = new Filme("Interestelar", 4, 6.5);
         filmes = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora()));
 //        When
         try {

@@ -103,7 +103,7 @@ class LocaçãoServiceTest {
         filme1 = new Filme("Mother", 1, 5.);
         filme2 = new Filme("Matrix", 0, 7.);
         filme3 = new Filme("Interestelar", 4, 6.5);
-        filmes = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().semEstoque().agora())); // padrão chained method.
+        filmes = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilmeSemEstoque().agora(), FilmeBuilder.umFilme().semEstoque().agora())); // padrão chained method.
 
 //		Then
         Assertions.assertThrows(FilmeSemEstoqueException.class, () -> locacaoService.alugarFilme(usuario, filmes)); // Visto que há uma exceção específica, a solução elegante se tornou completa. Deixando a robusta obsoleta.

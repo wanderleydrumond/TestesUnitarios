@@ -33,6 +33,16 @@ public class FilmeBuilder {
         return filmeBuilder;
     }
 
+    public static FilmeBuilder umFilmeSemEstoque() {
+        FilmeBuilder filmeBuilder = new FilmeBuilder();
+        filmeBuilder.filme = new Filme();
+        filmeBuilder.filme.setNome("Avengers, Infinity War");
+        filmeBuilder.filme.setPrecoLocacao(5.5);
+        filmeBuilder.filme.setEstoque(0);
+
+        return filmeBuilder;
+    }
+
     /**
      * Atualiza o estado do objeto <code>FilmeBuilder</code>.
      * <p>Mais uma etapa que compõe o padrão <i>chained method.</i></p>

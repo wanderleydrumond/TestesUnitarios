@@ -1,5 +1,7 @@
 package br.ce.wcaquino.servicos;
 
+import br.ce.wcaquino.builders.FilmeBuilder;
+import br.ce.wcaquino.builders.UsuárioBuilder;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -58,9 +60,9 @@ class LocaçãoServiceTest {
         filme1 = new Filme("Mother", 1, 5.);
         filme2 = new Filme("Matrix", 2, 7.);
         filme3 = new Filme("Interestelar", 4, 6.5);
-        filmes = new ArrayList<>(Arrays.asList(filme1, filme2, filme3));
+        filmes = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora()));
 
-        Usuario usuario = new Usuario("Wanderley");
+        Usuario usuario = UsuárioBuilder.umUsuário().agora();
 
         AtomicReference<Double> soma = new AtomicReference<>(0.);
         AtomicInteger índice = new AtomicInteger();
@@ -95,13 +97,13 @@ class LocaçãoServiceTest {
     public void naoDeveAlugarFilmeSemEstoque_Elegante() throws Exception {
 
 //        Given
-        Usuario usuario = new Usuario("Wanderley");
+        Usuario usuario = UsuárioBuilder.umUsuário().agora();
         LocacaoService locacaoService = new LocacaoService();
 
         filme1 = new Filme("Mother", 1, 5.);
         filme2 = new Filme("Matrix", 0, 7.);
         filme3 = new Filme("Interestelar", 4, 6.5);
-        filmes = new ArrayList<>(Arrays.asList(filme1, filme2, filme3));
+        filmes = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().semEstoque().agora())); // padrão chained method.
 
 //		Then
         Assertions.assertThrows(FilmeSemEstoqueException.class, () -> locacaoService.alugarFilme(usuario, filmes)); // Visto que há uma exceção específica, a solução elegante se tornou completa. Deixando a robusta obsoleta.
@@ -119,7 +121,7 @@ class LocaçãoServiceTest {
         filme1 = new Filme("Mother", 1, 5.);
         filme2 = new Filme("Matrix", 2, 7.);
         filme3 = new Filme("Interestelar", 4, 6.5);
-        filmes = new ArrayList<>(Arrays.asList(filme1, filme2, filme3));
+        filmes = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora()));
 //        When
         try {
             locacaoService.alugarFilme(null, filmes); //Se eu inserir um usuário, o teste falhará
@@ -142,7 +144,7 @@ class LocaçãoServiceTest {
 //        Given
         Assumptions.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY)); // Verifica se hoje é sábado
 
-        Usuario usuario = new Usuario("Wanderley");
+        Usuario usuario = UsuárioBuilder.umUsuário().agora();
         List<Filme> filmes = List.of(new Filme("Mother", 1, 5.));
 //        When
         Locacao retorno = locacaoService.alugarFilme(usuario, filmes);

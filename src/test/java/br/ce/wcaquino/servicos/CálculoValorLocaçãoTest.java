@@ -1,5 +1,6 @@
 package br.ce.wcaquino.servicos;
 
+import br.ce.wcaquino.builders.FilmeBuilder;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -26,13 +27,6 @@ import java.util.List;
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CálculoValorLocaçãoTest {
-    private final Filme filme1 = new Filme("Mother", 1, 10.);
-    private final Filme filme2 = new Filme("Matrix", 2, 10.);
-    private final Filme filme3 = new Filme("Interestelar", 4, 10.);
-    private final Filme filme4 = new Filme("The Conjuring", 6, 10.);
-    private final Filme filme5 = new Filme("The Day the Earth Stood Still", 5, 10.);
-    private final Filme filme6 = new Filme("Midsommar", 1, 10.);
-
     Usuario usuário = new Usuario("Wanderley");
 
     List<Filme> filmes;
@@ -45,7 +39,7 @@ public class CálculoValorLocaçãoTest {
     /**
      * Valor da locação utilizado no teste <code>deveCalcularValorLocacaoConsiderandoDescontos</code>
      */
-    private Double valorTotalLocação = filme1.getPrecoLocacao() + filme2.getPrecoLocacao();
+    private Double valorTotalLocação = FilmeBuilder.umFilme().agora().getPrecoLocacao() + FilmeBuilder.umFilme().agora().getPrecoLocacao();
 
     /**
      * Prepara o ambiente antes da execução de cada teste parametrizado.
@@ -63,10 +57,10 @@ public class CálculoValorLocaçãoTest {
      * @return a lista de listas de filmes
      */
     public List<List<Filme>> getFilmes() {
-        List<Filme> filmes1 = new ArrayList<>(Arrays.asList(filme1, filme2, filme3));
-        List<Filme> filmes2 = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4));
-        List<Filme> filmes3 = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4, filme5));
-        List<Filme> filmes4 = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4, filme5, filme6));
+        List<Filme> filmes1 = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora()));
+        List<Filme> filmes2 = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora()));
+        List<Filme> filmes3 = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora()));
+        List<Filme> filmes4 = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora()));
         return new ArrayList<>(Arrays.asList(filmes1, filmes2, filmes3, filmes4));
     }
 
@@ -83,9 +77,9 @@ public class CálculoValorLocaçãoTest {
 //        When
         Locacao locacao = locaçãoService.alugarFilme(usuário, filmes);
         switch (índice) {
-            case 0 -> valorTotalLocação += filme3.getPrecoLocacao() * 75 / 100;
-            case 1 -> valorTotalLocação += filme3.getPrecoLocacao() * 50 / 100;
-            case 2 -> valorTotalLocação += filme3.getPrecoLocacao() * 25 / 100;
+            case 0 -> valorTotalLocação += FilmeBuilder.umFilme().agora().getPrecoLocacao() * 75 / 100;
+            case 1 -> valorTotalLocação += FilmeBuilder.umFilme().agora().getPrecoLocacao() * 50 / 100;
+            case 2 -> valorTotalLocação += FilmeBuilder.umFilme().agora().getPrecoLocacao() * 25 / 100;
         }
 
 //        Then

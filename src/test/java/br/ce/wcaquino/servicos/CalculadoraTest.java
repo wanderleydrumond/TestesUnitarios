@@ -1,10 +1,7 @@
 package br.ce.wcaquino.servicos;
 
 import br.ce.wcaquino.exceptions.DivisaoPorZeroException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 class CalculadoraTest {
 
@@ -20,6 +17,7 @@ class CalculadoraTest {
     }
 
     @Test
+    @DisplayName("Soma de dois números inteiros")
     public void somarDoisInteiros() {
 //        Given
         int valor1 = 5, valor2 = 3;
@@ -30,6 +28,7 @@ class CalculadoraTest {
     }
 
     @Test
+    @DisplayName("Subtração de dois números inteiros")
     public void subtrairDoisInteiros() {
 //        Given
         int valor1 = 8, valor2 = 5;
@@ -42,6 +41,7 @@ class CalculadoraTest {
     }
 
     @Test
+    @DisplayName("Divisão de dois números inteiros")
     public void dividirDoisInteiros() throws DivisaoPorZeroException {
 //        Given
         int valor1 = 6, valor2 = 3;
@@ -54,6 +54,7 @@ class CalculadoraTest {
     }
 
     @Test
+    @DisplayName("Tratar o problema de uma divisão por zero")
     public void lancarExcecaoDivisaoZero() throws DivisaoPorZeroException {
 //        Given
         int valor1 = 10, valor2 = 0;

@@ -27,7 +27,7 @@ import static br.ce.wcaquino.utils.DataUtils.obterDataComDiferencaDias;
  *
  * @author Wanderley Drumond
  * @since 05/03/2022
- * @version 4.0
+ * @version 4.1
  */
 class LocaçãoServiceTest {
     private List<Filme> filmes;
@@ -36,7 +36,7 @@ class LocaçãoServiceTest {
     private Filme filme1, filme2, filme3;
 
     /**
-     * Visto que há mais de um teste utilizando soft assertions, eu garanti que, para cada teste, uma nova instância é criada.
+     * Visto que há mais de um teste utilizando <i>soft assertions</i>, eu garanti que, para cada teste, uma nova instância é criada.
      */
     @BeforeEach
     void setUp() {

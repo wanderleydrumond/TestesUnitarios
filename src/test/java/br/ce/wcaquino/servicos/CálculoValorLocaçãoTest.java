@@ -8,6 +8,7 @@ import br.ce.wcaquino.exceptions.LocadoraException;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -21,7 +22,7 @@ import java.util.List;
  *
  * @author Wanderley Drumond
  * @since 12/03/2022
- * @version 3.0
+ * @version 3.1
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CálculoValorLocaçãoTest {
@@ -77,6 +78,7 @@ public class CálculoValorLocaçãoTest {
      */
     @ParameterizedTest(name = "{index}º teste")
     @MethodSource("getFilmes")
+    @DisplayName("Calcular valor de cada locação de acordo com o seus devidos descontos")
     public void deveCalcularValorLocaçãoConsiderandoDescontos() throws FilmeSemEstoqueException, LocadoraException {
 //        When
         Locacao locacao = locaçãoService.alugarFilme(usuário, filmes);

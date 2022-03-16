@@ -3,6 +3,13 @@ package br.ce.wcaquino;
 import br.ce.wcaquino.entidades.Usuario;
 import org.junit.jupiter.api.*;
 
+/**
+ * Classe que apresenta as assertivas mais básicas.
+ *
+ * @author Wanderley Drumond
+ * @since 06/03/2022
+ * @version 6.0
+ */
 public class AssertTest {
     /**
      * Para que a instância se permaneça para ser utilizada em todos os métodos é necessário que os atributos sejam estáticos.
@@ -41,32 +48,51 @@ public class AssertTest {
         System.out.println("Incrementador: " + incrementador * 10 + "\n" + "Decrementador: " + decrementador * 10);
     }
 
+    /**
+     * Verifica se o valor é <code>true</code>.
+     */
     @Test
+    @DisplayName("Verificar se o valor é verdadeiro")
     public void verificarVerdade() {
-//        Verifica se o valor é true
         Assertions.assertTrue(true);
         Assertions.assertTrue(!false); // Não é recomendado utilizar negações
     }
 
+    /**
+     * Verifica se o valor é <code>false</code>.
+     */
     @Test
+    @DisplayName("Verificar se o valor é falso")
     public void verificarFalsidade() {
         Assertions.assertFalse(false);
         Assertions.assertFalse(!true);  // Não é recomendado utilizar negações
     }
 
+    /**
+     * Verifica se dois números inteiros têm o mesmo valor.
+     */
     @Test
+    @DisplayName("Verificar se um valor inteiro é igual a outro")
     public void verificarIgualdadeInteiros() {
         Assertions.assertEquals(1,1);
         Assertions.assertEquals(1,1, "Inteiros diferentes");
     }
 
+    /**
+     * Verifica se dois números decimais têm o mesmo valor.
+     */
     @Test
+    @DisplayName("Verificar se um valor com ponto flutuante é igual a outro")
     public void verificarIgualdadePontoFlutuante() {
         Assertions.assertEquals(0.51234, 0.512,0.001);
         Assertions.assertEquals(Math.PI, 3.14,0.01); // O delta é a margem de erro do número decimal.
     }
 
+    /**
+     * Verificar se um valor contido numa <i>Wrapper class</i> corresponde ao valor do seu primitivo.
+     */
     @Test
+    @DisplayName("Verificar boxing/unboxing")
     public void verificarValorPrimitivoWrapper() {
         int i1 = 5;
         Integer i2 = 5;
@@ -76,7 +102,11 @@ public class AssertTest {
         Assertions.assertEquals(i1,i2.intValue()); // Transforma o valor primitivo em uma Wrapper class.
     }
 
+    /**
+     * Comparar valor entre <i>strings</i>.
+     */
     @Test
+    @DisplayName("Comparar os valores das strings")
     public void verificarIgualdadeStrings() {
         Assertions.assertEquals("bola", "bola");
         Assertions.assertNotEquals("bola", "Bola");
@@ -84,7 +114,11 @@ public class AssertTest {
         Assertions.assertTrue("bola".startsWith("bo"));
     }
 
+    /**
+     * Verificar se um objeto tem o mesmo valor que outro.
+     */
     @Test
+    @DisplayName("Verificar igualdade de valor entre objetos")
     public void verificarIgualdadeObjetos() {
 //        Given
         Usuario usuario1 = new Usuario("Usuário");
@@ -94,7 +128,11 @@ public class AssertTest {
         Assertions.assertEquals(usuario1,usuario2); // Só funciona se tiver o método equals implementado na classe
     }
 
+    /**
+     * Verificar se um objeto tem a mesma instância que outra.
+     */
     @Test
+    @DisplayName("Verificar igualdade de instância entre objetos")
     public void verificarInstancia() {
 //        Given
         Usuario usuario1 = new Usuario("Usuário");
@@ -106,7 +144,11 @@ public class AssertTest {
         Assertions.assertNotSame(usuario1,usuario2);
     }
 
+    /**
+     * Verificar se um objeto é nulo.
+     */
     @Test
+    @DisplayName("Verificar se um objeto é nulo")
     public void verificarNulidade() {
 //        Given
         Usuario usuario1 = new Usuario("Usuário");

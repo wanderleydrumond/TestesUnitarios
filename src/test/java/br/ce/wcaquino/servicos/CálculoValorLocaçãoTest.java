@@ -45,7 +45,7 @@ public class CálculoValorLocaçãoTest {
      * Prepara o ambiente antes da execução de cada teste parametrizado.
      */
     @BeforeEach
-    public void setup() {
+    void setup() {
 //        Given
         locaçãoService = new LocacaoService();
         filmes = new ArrayList<>(getFilmes().get(índice));
@@ -73,7 +73,7 @@ public class CálculoValorLocaçãoTest {
     @ParameterizedTest(name = "{index}º teste")
     @MethodSource("getFilmes")
     @DisplayName("Calcular valor de cada locação de acordo com o seus devidos descontos")
-    public void deveCalcularValorLocaçãoConsiderandoDescontos() throws FilmeSemEstoqueException, LocadoraException {
+    void deveCalcularValorLocaçãoConsiderandoDescontos() throws FilmeSemEstoqueException, LocadoraException {
 //        When
         Locacao locacao = locaçãoService.alugarFilme(usuário, filmes);
         switch (índice) {

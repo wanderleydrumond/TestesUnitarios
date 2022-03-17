@@ -17,4 +17,8 @@ public class Calculadora {
         }
         return valor1 / valor2;
     }
+
+    public int dividir(String dividendo, String divisor) {
+        return Integer.valueOf(dividendo) / Integer.valueOf(divisor);
+    }
 }

@@ -53,7 +53,7 @@ public class AssertTest {
      */
     @Test
     @DisplayName("Verificar se o valor é verdadeiro")
-    public void verificarVerdade() {
+    void verificarVerdade() {
         Assertions.assertTrue(true);
         Assertions.assertTrue(!false); // Não é recomendado utilizar negações
     }
@@ -63,7 +63,7 @@ public class AssertTest {
      */
     @Test
     @DisplayName("Verificar se o valor é falso")
-    public void verificarFalsidade() {
+    void verificarFalsidade() {
         Assertions.assertFalse(false);
         Assertions.assertFalse(!true);  // Não é recomendado utilizar negações
     }
@@ -73,7 +73,7 @@ public class AssertTest {
      */
     @Test
     @DisplayName("Verificar se um valor inteiro é igual a outro")
-    public void verificarIgualdadeInteiros() {
+    void verificarIgualdadeInteiros() {
         Assertions.assertEquals(1,1);
         Assertions.assertEquals(1,1, "Inteiros diferentes");
     }
@@ -83,7 +83,7 @@ public class AssertTest {
      */
     @Test
     @DisplayName("Verificar se um valor com ponto flutuante é igual a outro")
-    public void verificarIgualdadePontoFlutuante() {
+    void verificarIgualdadePontoFlutuante() {
         Assertions.assertEquals(0.51234, 0.512,0.001);
         Assertions.assertEquals(Math.PI, 3.14,0.01); // O delta é a margem de erro do número decimal.
     }
@@ -93,7 +93,7 @@ public class AssertTest {
      */
     @Test
     @DisplayName("Verificar boxing/unboxing")
-    public void verificarValorPrimitivoWrapper() {
+    void verificarValorPrimitivoWrapper() {
         int i1 = 5;
         Integer i2 = 5;
 
@@ -107,7 +107,7 @@ public class AssertTest {
      */
     @Test
     @DisplayName("Comparar os valores das strings")
-    public void verificarIgualdadeStrings() {
+    void verificarIgualdadeStrings() {
         Assertions.assertEquals("bola", "bola");
         Assertions.assertNotEquals("bola", "Bola");
         Assertions.assertTrue("bola".equalsIgnoreCase("Bola"));
@@ -119,7 +119,7 @@ public class AssertTest {
      */
     @Test
     @DisplayName("Verificar igualdade de valor entre objetos")
-    public void verificarIgualdadeObjetos() {
+    void verificarIgualdadeObjetos() {
 //        Given
         Usuario usuario1 = new Usuario("Usuário");
         Usuario usuario2 = new Usuario("Usuário");
@@ -133,7 +133,7 @@ public class AssertTest {
      */
     @Test
     @DisplayName("Verificar igualdade de instância entre objetos")
-    public void verificarInstancia() {
+    void verificarInstancia() {
 //        Given
         Usuario usuario1 = new Usuario("Usuário");
         Usuario usuario2 = new Usuario("Usuário");
@@ -149,7 +149,7 @@ public class AssertTest {
      */
     @Test
     @DisplayName("Verificar se um objeto é nulo")
-    public void verificarNulidade() {
+    void verificarNulidade() {
 //        Given
         Usuario usuario1 = new Usuario("Usuário");
         Usuario usuario2 = null;

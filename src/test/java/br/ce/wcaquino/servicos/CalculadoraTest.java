@@ -18,7 +18,7 @@ class CalculadoraTest {
 
     @Test
     @DisplayName("Soma de dois números inteiros")
-    public void somarDoisInteiros() {
+    void somarDoisInteiros() {
 //        Given
         int valor1 = 5, valor2 = 3;
 //        When
@@ -29,7 +29,7 @@ class CalculadoraTest {
 
     @Test
     @DisplayName("Subtração de dois números inteiros")
-    public void subtrairDoisInteiros() {
+    void subtrairDoisInteiros() {
 //        Given
         int valor1 = 8, valor2 = 5;
 
@@ -42,7 +42,7 @@ class CalculadoraTest {
 
     @Test
     @DisplayName("Divisão de dois números inteiros")
-    public void dividirDoisInteiros() throws DivisaoPorZeroException {
+    void dividirDoisInteiros() throws DivisaoPorZeroException {
 //        Given
         int valor1 = 6, valor2 = 3;
 
@@ -55,11 +55,21 @@ class CalculadoraTest {
 
     @Test
     @DisplayName("Tratar o problema de uma divisão por zero")
-    public void lancarExcecaoDivisaoZero() throws DivisaoPorZeroException {
+    void lancarExcecaoDivisaoZero() throws DivisaoPorZeroException {
 //        Given
         int valor1 = 10, valor2 = 0;
 
 //        Then
         Assertions.assertThrows(DivisaoPorZeroException.class, () -> calculadora.dividirDoisInteiros(valor1,valor2));
+    }
+
+    @Test
+    void deveDividir() {
+        String dividendo = "6";
+        String dividor = "3";
+
+        int resultado = calculadora.dividir(dividendo,dividor);
+
+        Assertions.assertEquals(2, resultado);
     }
 }

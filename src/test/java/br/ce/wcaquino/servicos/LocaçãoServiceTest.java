@@ -66,7 +66,6 @@ class LocaçãoServiceTest {
 //		When
         Locacao locacao = locacaoService.alugarFilme(usuario, filmes);
 
-//        Solução utilizando forEach com lambda
         filmes.forEach(filmeElemento -> {
             if (índice.get() == 2) {
                 filmes.get(índice.get()).setPrecoLocacao(filmeElemento.getPrecoLocacao() * 75 / 100);
@@ -90,7 +89,7 @@ class LocaçãoServiceTest {
      * @throws Exception exceção que fará o teste apresentar erro.
      */
     @Test
-    public void naoDeveAlugarFilmeSemEstoque_Elegante() throws Exception {
+    void naoDeveAlugarFilmeSemEstoque_Elegante() throws Exception {
 
 //        Given
         Usuario usuario = UsuárioBuilder.umUsuário().agora();
@@ -108,7 +107,7 @@ class LocaçãoServiceTest {
      * @throws FilmeSemEstoqueException exceção que fará o teste apresentar falha.
      */
     @Test
-    public void naoDeveAlugarFilmesSemUsuario_Robusta() throws FilmeSemEstoqueException { // Deixo o JUnit tratar esta exceção
+    void naoDeveAlugarFilmesSemUsuario_Robusta() throws FilmeSemEstoqueException { // Deixo o JUnit tratar esta exceção
         filmes = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora()));
 //        When
         try {
@@ -128,7 +127,7 @@ class LocaçãoServiceTest {
      * @throws LocadoraException        quando <code>Usuario</code> for igual a nulo.
      */
     @Test
-    public void deveDevolverNaSegundaAoAlugarNoSábado() throws FilmeSemEstoqueException, LocadoraException {
+    void deveDevolverNaSegundaAoAlugarNoSábado() throws FilmeSemEstoqueException, LocadoraException {
 //        Given
         Assumptions.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY)); // Verifica se hoje é sábado
 

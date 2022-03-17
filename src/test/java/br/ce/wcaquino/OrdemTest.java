@@ -15,12 +15,12 @@ public class OrdemTest {
     public static int contador = 0;
 
     @Test
-    public void iniciar() {
+    void iniciar() {
         contador = 1;
     }
 
     @Test
-    public void verificar() {
+    void verificar() {
         Assertions.assertEquals(1, contador);
     }
 }

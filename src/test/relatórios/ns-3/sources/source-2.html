@@ -76,7 +76,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package br.ce.wcaquino.servicos;
 <i class="no-highlight">2</i>&nbsp;
 <i class="no-highlight">3</i>&nbsp;import br.ce.wcaquino.entidades.Filme;
-<i class="no-highlight">4</i>&nbsp;import br.ce.wcaquino.entidades.Locacao;
+<i class="no-highlight">4</i>&nbsp;import br.ce.wcaquino.entidades.LocaÃ§Ã£o;
 <i class="no-highlight">5</i>&nbsp;import br.ce.wcaquino.entidades.Usuario;
 <i class="no-highlight">6</i>&nbsp;import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 <i class="no-highlight">7</i>&nbsp;import br.ce.wcaquino.exceptions.LocadoraException;
@@ -88,7 +88,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <i class="no-highlight">13</i>&nbsp;import static br.ce.wcaquino.utils.DataUtils.adicionarDias;
 <i class="no-highlight">14</i>&nbsp;
 <i class="no-highlight">15</i>&nbsp;/**
-<i class="no-highlight">16</i>&nbsp; * Classe de execução do sistema.
+<i class="no-highlight">16</i>&nbsp; * Classe de execuï¿½ï¿½o do sistema.
 <i class="no-highlight">17</i>&nbsp; */
 <b class="fc"><i class="no-highlight">18</i>&nbsp;public class LocacaoService {</b>
 <i class="no-highlight">19</i>&nbsp;
@@ -97,7 +97,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <i class="no-highlight">22</i>&nbsp;    /**
 <i class="no-highlight">23</i>&nbsp;     * Inicializa o sistema.
 <i class="no-highlight">24</i>&nbsp;     *
-<i class="no-highlight">25</i>&nbsp;     * @param args Argumento padrão do método main.
+<i class="no-highlight">25</i>&nbsp;     * @param args Argumento padrï¿½o do mï¿½todo main.
 <i class="no-highlight">26</i>&nbsp;     */
 <i class="no-highlight">27</i>&nbsp;    public static void main(String[] args) {
 <i class="no-highlight">28</i>&nbsp;//		Given
@@ -112,34 +112,34 @@ Current scope:     <a href="../../index.html">all classes</a>
 <i class="no-highlight">37</i>&nbsp;
 <b class="nc"><i class="no-highlight">38</i>&nbsp;        List&lt;Filme&gt; filmes = new ArrayList&lt;&gt;(Arrays.asList(filme1, filme2, filme3, filme4, filme5, filme6));</b>
 <i class="no-highlight">39</i>&nbsp;
-<b class="nc"><i class="no-highlight">40</i>&nbsp;        LocacaoService locacaoService = new LocacaoService();</b>
+<b class="nc"><i class="no-highlight">40</i>&nbsp;        LocacaoService locaÃ§Ã£oService = new LocacaoService();</b>
 <i class="no-highlight">41</i>&nbsp;
 <i class="no-highlight">42</i>&nbsp;//		When
-<b class="nc"><i class="no-highlight">43</i>&nbsp;        Locacao locacao = null;</b>
+<b class="nc"><i class="no-highlight">43</i>&nbsp;        Locacao locaÃ§Ã£o = null;</b>
 <i class="no-highlight">44</i>&nbsp;        try {
-<b class="nc"><i class="no-highlight">45</i>&nbsp;            locacao = locacaoService.alugarFilme(usuario, filmes);</b>
+<b class="nc"><i class="no-highlight">45</i>&nbsp;            locaÃ§Ã£o = locaÃ§Ã£oService.alugarFilme(usuario, filmes);</b>
 <b class="nc"><i class="no-highlight">46</i>&nbsp;        } catch (Exception exception) {</b>
 <b class="nc"><i class="no-highlight">47</i>&nbsp;            exception.printStackTrace();</b>
 <b class="nc"><i class="no-highlight">48</i>&nbsp;        }</b>
 <i class="no-highlight">49</i>&nbsp;
 <i class="no-highlight">50</i>&nbsp;//		Then
-<i class="no-highlight">51</i>&nbsp;        // Verifica o preço da locação
+<i class="no-highlight">51</i>&nbsp;        // Verifica o preï¿½o da locaï¿½ï¿½o
 <b class="nc"><i class="no-highlight">52</i>&nbsp;        filmes.stream().filter(filmeElement -&gt; filmeElement.getPrecoLocacao() == 5. || filmeElement.getPrecoLocacao() == 6.5 || filmeElement.getPrecoLocacao() == 7. || filmeElement.getPrecoLocacao() == 10.).map(filmeElement -&gt; true).forEach(System.out::println);</b>
-<b class="nc"><i class="no-highlight">53</i>&nbsp;        assert locacao != null;</b>
-<b class="nc"><i class="no-highlight">54</i>&nbsp;        System.out.println(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date())); // Verifica a data da locação</b>
-<b class="nc"><i class="no-highlight">55</i>&nbsp;        System.out.println(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1))); // Verifica a data de retorno da locação</b>
+<b class="nc"><i class="no-highlight">53</i>&nbsp;        assert locaÃ§Ã£o != null;</b>
+<b class="nc"><i class="no-highlight">54</i>&nbsp;        System.out.println(DataUtils.isMesmaData(locaÃ§Ã£o.getDataLocacao(), new Date())); // Verifica a data da locaï¿½ï¿½o</b>
+<b class="nc"><i class="no-highlight">55</i>&nbsp;        System.out.println(DataUtils.isMesmaData(locaÃ§Ã£o.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1))); // Verifica a data de retorno da locaï¿½ï¿½o</b>
 <i class="no-highlight">56</i>&nbsp;    }
 <i class="no-highlight">57</i>&nbsp;
 <i class="no-highlight">58</i>&nbsp;    /**
-<i class="no-highlight">59</i>&nbsp;     * Atualiza os valores da locação para o usuário e a lista de filmes passados por parâmetro.
+<i class="no-highlight">59</i>&nbsp;     * Atualiza os valores da locaï¿½ï¿½o para o usuï¿½rio e a lista de filmes passados por parï¿½metro.
 <i class="no-highlight">60</i>&nbsp;     *
-<i class="no-highlight">61</i>&nbsp;     * @param usuario O usuário do qual deve ser feita a modificação.
-<i class="no-highlight">62</i>&nbsp;     * @param filmes  A lista de filmes do qual deve ser feita a modificação.
+<i class="no-highlight">61</i>&nbsp;     * @param usuario O usuï¿½rio do qual deve ser feita a modificaï¿½ï¿½o.
+<i class="no-highlight">62</i>&nbsp;     * @param filmes  A lista de filmes do qual deve ser feita a modificaï¿½ï¿½o.
 <i class="no-highlight">63</i>&nbsp;     * @return A &lt;code&gt;Locacao&lt;/code&gt; atualizada.
 <i class="no-highlight">64</i>&nbsp;     */
 <i class="no-highlight">65</i>&nbsp;    public Locacao alugarFilme(Usuario usuario, @NotNull List&lt;Filme&gt; filmes) throws FilmeSemEstoqueException, LocadoraException {
 <b class="fc"><i class="no-highlight">66</i>&nbsp;        if (usuario == null) {</b>
-<b class="fc"><i class="no-highlight">67</i>&nbsp;            throw new LocadoraException(&quot;Usuário vazio&quot;);</b>
+<b class="fc"><i class="no-highlight">67</i>&nbsp;            throw new LocadoraException(&quot;Usuï¿½rio vazio&quot;);</b>
 <i class="no-highlight">68</i>&nbsp;        }
 <i class="no-highlight">69</i>&nbsp;
 <b class="fc"><i class="no-highlight">70</i>&nbsp;        if (filmes.isEmpty()) {</b>
@@ -152,10 +152,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 <i class="no-highlight">77</i>&nbsp;            }
 <b class="fc"><i class="no-highlight">78</i>&nbsp;        }</b>
 <i class="no-highlight">79</i>&nbsp;
-<b class="fc"><i class="no-highlight">80</i>&nbsp;        Locacao locacao = new Locacao();</b>
-<b class="fc"><i class="no-highlight">81</i>&nbsp;        locacao.setFilmes(filmes);</b>
-<b class="fc"><i class="no-highlight">82</i>&nbsp;        locacao.setUsuario(usuario);</b>
-<b class="fc"><i class="no-highlight">83</i>&nbsp;        locacao.setDataLocacao(dataLocacao);</b>
+<b class="fc"><i class="no-highlight">80</i>&nbsp;        Locacao locaÃ§Ã£o = new Locacao();</b>
+<b class="fc"><i class="no-highlight">81</i>&nbsp;        locaÃ§Ã£o.setFilmes(filmes);</b>
+<b class="fc"><i class="no-highlight">82</i>&nbsp;        locaÃ§Ã£o.setUsuario(usuario);</b>
+<b class="fc"><i class="no-highlight">83</i>&nbsp;        locaÃ§Ã£o.setDataLocacao(dataLocacao);</b>
 <i class="no-highlight">84</i>&nbsp;
 <b class="fc"><i class="no-highlight">85</i>&nbsp;        Double valorTotal = 0., auxiliar;</b>
 <b class="fc"><i class="no-highlight">86</i>&nbsp;        int index = 0;</b>
@@ -171,7 +171,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc"><i class="no-highlight">96</i>&nbsp;            valorTotal += auxiliar;</b>
 <b class="fc"><i class="no-highlight">97</i>&nbsp;            index++;</b>
 <b class="fc"><i class="no-highlight">98</i>&nbsp;        }</b>
-<b class="fc"><i class="no-highlight">99</i>&nbsp;        locacao.setValor(valorTotal);</b>
+<b class="fc"><i class="no-highlight">99</i>&nbsp;        locaÃ§Ã£o.setValor(valorTotal);</b>
 <i class="no-highlight">100</i>&nbsp;
 <i class="no-highlight">101</i>&nbsp;        //Entrega no dia seguinte
 <b class="fc"><i class="no-highlight">102</i>&nbsp;        Date dataEntrega = new Date();</b>
@@ -179,19 +179,19 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc"><i class="no-highlight">104</i>&nbsp;        if (DataUtils.verificarDiaSemana(dataEntrega, Calendar.SUNDAY)) {</b>
 <b class="nc"><i class="no-highlight">105</i>&nbsp;            dataEntrega = adicionarDias(dataEntrega, 1);</b>
 <i class="no-highlight">106</i>&nbsp;        }
-<b class="fc"><i class="no-highlight">107</i>&nbsp;        locacao.setDataRetorno(dataEntrega);</b>
+<b class="fc"><i class="no-highlight">107</i>&nbsp;        locaÃ§Ã£o.setDataRetorno(dataEntrega);</b>
 <i class="no-highlight">108</i>&nbsp;
-<i class="no-highlight">109</i>&nbsp;        //Salvando a locação...
-<i class="no-highlight">110</i>&nbsp;        //TODO adicionar método para salvar
+<i class="no-highlight">109</i>&nbsp;        //Salvando a locaï¿½ï¿½o...
+<i class="no-highlight">110</i>&nbsp;        //TODO adicionar mï¿½todo para salvar
 <i class="no-highlight">111</i>&nbsp;
-<i class="no-highlight">112</i>&nbsp;        /*Princípios dos testes unitários
-<i class="no-highlight">113</i>&nbsp;         * Fast -&gt; os resultados precisam ser exibidos imediatamente para garantir que sempre serão executados no momento correto.
-<i class="no-highlight">114</i>&nbsp;         * Independent -&gt; Tudo o que o teste precisa para executar já está nele. || Isolate -&gt; Cada teste é responsável por encontrar uma única falha isoladamente.
-<i class="no-highlight">115</i>&nbsp;         * Repeatable -&gt; O teste precisa executar quantas vezes forem necessárias e exibir sempre o mesmo resultado.
-<i class="no-highlight">116</i>&nbsp;         * Self-Verifying -&gt; O teste deve ser capaz de verificar quando sua execução foi correta ou quando a mesma falhou ou deu erro.
+<i class="no-highlight">112</i>&nbsp;        /*Princï¿½pios dos testes unitï¿½rios
+<i class="no-highlight">113</i>&nbsp;         * Fast -&gt; os resultados precisam ser exibidos imediatamente para garantir que sempre serï¿½o executados no momento correto.
+<i class="no-highlight">114</i>&nbsp;         * Independent -&gt; Tudo o que o teste precisa para executar jï¿½ estï¿½ nele. || Isolate -&gt; Cada teste ï¿½ responsï¿½vel por encontrar uma ï¿½nica falha isoladamente.
+<i class="no-highlight">115</i>&nbsp;         * Repeatable -&gt; O teste precisa executar quantas vezes forem necessï¿½rias e exibir sempre o mesmo resultado.
+<i class="no-highlight">116</i>&nbsp;         * Self-Verifying -&gt; O teste deve ser capaz de verificar quando sua execuï¿½ï¿½o foi correta ou quando a mesma falhou ou deu erro.
 <i class="no-highlight">117</i>&nbsp;         * Timely -&gt; O teste deve ser criado no momento certo.*/
 <i class="no-highlight">118</i>&nbsp;
-<b class="fc"><i class="no-highlight">119</i>&nbsp;        return locacao;</b>
+<b class="fc"><i class="no-highlight">119</i>&nbsp;        return locaÃ§Ã£o;</b>
 <i class="no-highlight">120</i>&nbsp;    }
 <i class="no-highlight">121</i>&nbsp;}
 </div>

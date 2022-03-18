@@ -1,8 +1,10 @@
 package br.ce.wcaquino.servicos;
 
 import br.ce.wcaquino.builders.FilmeBuilder;
+import br.ce.wcaquino.daos.LocaçãoDAO;
+import br.ce.wcaquino.daos.LocaçãoDAOFake;
 import br.ce.wcaquino.entidades.Filme;
-import br.ce.wcaquino.entidades.Locacao;
+import br.ce.wcaquino.entidades.Locação;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import br.ce.wcaquino.exceptions.LocadoraException;
@@ -31,7 +33,7 @@ public class CálculoValorLocaçãoTest {
 
     List<Filme> filmes;
 
-    private LocacaoService locaçãoService;
+    private LocaçãoService locaçãoService;
     /**
      * Incrementador para o teste <code>deveCalcularValorLocacaoConsiderandoDescontos</code>
      */
@@ -47,8 +49,11 @@ public class CálculoValorLocaçãoTest {
     @BeforeEach
     void setup() {
 //        Given
-        locaçãoService = new LocacaoService();
+        locaçãoService = new LocaçãoService();
         filmes = new ArrayList<>(getFilmes().get(índice));
+
+        LocaçãoDAO locaçãoDAO = new LocaçãoDAOFake();
+        locaçãoService.setLocaçãoDAO(locaçãoDAO);
     }
 
     /**
@@ -75,7 +80,7 @@ public class CálculoValorLocaçãoTest {
     @DisplayName("Calcular valor de cada locação de acordo com o seus devidos descontos")
     void deveCalcularValorLocaçãoConsiderandoDescontos() throws FilmeSemEstoqueException, LocadoraException {
 //        When
-        Locacao locacao = locaçãoService.alugarFilme(usuário, filmes);
+        Locação locação = locaçãoService.alugarFilme(usuário, filmes);
         switch (índice) {
             case 0 -> valorTotalLocação += FilmeBuilder.umFilme().agora().getPrecoLocacao() * 75 / 100;
             case 1 -> valorTotalLocação += FilmeBuilder.umFilme().agora().getPrecoLocacao() * 50 / 100;
@@ -83,7 +88,7 @@ public class CálculoValorLocaçãoTest {
         }
 
 //        Then
-        MatcherAssert.assertThat(locacao.getValor(), CoreMatchers.is(valorTotalLocação));
+        MatcherAssert.assertThat(locação.getValor(), CoreMatchers.is(valorTotalLocação));
         índice++;
     }
 }

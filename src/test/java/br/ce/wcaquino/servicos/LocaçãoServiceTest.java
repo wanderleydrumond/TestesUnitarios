@@ -2,8 +2,10 @@ package br.ce.wcaquino.servicos;
 
 import br.ce.wcaquino.builders.FilmeBuilder;
 import br.ce.wcaquino.builders.UsuárioBuilder;
+import br.ce.wcaquino.daos.LocaçãoDAO;
+import br.ce.wcaquino.daos.LocaçãoDAOFake;
 import br.ce.wcaquino.entidades.Filme;
-import br.ce.wcaquino.entidades.Locacao;
+import br.ce.wcaquino.entidades.Locação;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import br.ce.wcaquino.exceptions.LocadoraException;
@@ -34,7 +36,7 @@ import static br.ce.wcaquino.utils.DataUtils.obterDataComDiferencaDias;
 class LocaçãoServiceTest {
     private List<Filme> filmes;
     private SoftAssertions softAssertions;
-    private LocacaoService locacaoService;
+    private LocaçãoService locaçãoService;
 
     /**
      * Visto que há mais de um teste utilizando <i>soft assertions</i>, eu garanti que, para cada teste, uma nova instância é criada.
@@ -43,7 +45,9 @@ class LocaçãoServiceTest {
     void setUp() {
         softAssertions = new SoftAssertions();
 //        Given
-        locacaoService = new LocacaoService();
+        locaçãoService = new LocaçãoService();
+        LocaçãoDAO locaçãoDAO = new LocaçãoDAOFake();
+        locaçãoService.setLocaçãoDAO(locaçãoDAO);
     }
 
     /**
@@ -64,7 +68,7 @@ class LocaçãoServiceTest {
         AtomicInteger índice = new AtomicInteger();
 
 //		When
-        Locacao locacao = locacaoService.alugarFilme(usuario, filmes);
+        Locação locação = locaçãoService.alugarFilme(usuario, filmes);
 
         filmes.forEach(filmeElemento -> {
             if (índice.get() == 2) {
@@ -75,9 +79,9 @@ class LocaçãoServiceTest {
         });
 
 //		Then
-        softAssertions.assertThat(locacao.getValor()).as("Preço da locação incorreto").isEqualTo(soma.get().doubleValue());
-        softAssertions.assertThat(locacao.getDataLocacao()).as("Data da locação incorreta").isEqualTo(locacaoService.dataLocacao);
-        softAssertions.assertThat(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1))).isEqualTo(true);
+        softAssertions.assertThat(locação.getValor()).as("Preço da locação incorreto").isEqualTo(soma.get().doubleValue());
+        softAssertions.assertThat(locação.getDataLocacao()).as("Data da locação incorreta").isEqualTo(locaçãoService.dataLocação);
+        softAssertions.assertThat(isMesmaData(locação.getDataRetorno(), obterDataComDiferencaDias(1))).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -93,11 +97,11 @@ class LocaçãoServiceTest {
 
 //        Given
         Usuario usuario = UsuárioBuilder.umUsuário().agora();
-        LocacaoService locacaoService = new LocacaoService();
+        LocaçãoService locaçãoService = new LocaçãoService();
         filmes = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilmeSemEstoque().agora(), FilmeBuilder.umFilme().semEstoque().agora())); // padrão chained method.
 
 //		Then
-        Assertions.assertThrows(FilmeSemEstoqueException.class, () -> locacaoService.alugarFilme(usuario, filmes)); // Visto que há uma exceção específica, a solução elegante se tornou completa. Deixando a robusta obsoleta.
+        Assertions.assertThrows(FilmeSemEstoqueException.class, () -> locaçãoService.alugarFilme(usuario, filmes)); // Visto que há uma exceção específica, a solução elegante se tornou completa. Deixando a robusta obsoleta.
     }
 
     /**
@@ -111,7 +115,7 @@ class LocaçãoServiceTest {
         filmes = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora()));
 //        When
         try {
-            locacaoService.alugarFilme(null, filmes); //Se eu inserir um usuário, o teste falhará
+            locaçãoService.alugarFilme(null, filmes); //Se eu inserir um usuário, o teste falhará
             Assertions.fail();
         } catch (LocadoraException locadoraException) { // Eu trato esta exceção
 //            Then
@@ -134,7 +138,7 @@ class LocaçãoServiceTest {
         Usuario usuario = UsuárioBuilder.umUsuário().agora();
         List<Filme> filmes = List.of(new Filme("Mother", 1, 5.));
 //        When
-        Locacao retorno = locacaoService.alugarFilme(usuario, filmes);
+        Locação retorno = locaçãoService.alugarFilme(usuario, filmes);
 //        Then
         MatcherAssert.assertThat(retorno.getDataRetorno(), MatchersPróprios.caiEm(Calendar.MONDAY)); // Abordagem 1
         MatcherAssert.assertThat(retorno.getDataRetorno(), MatchersPróprios.caiNumaSegunda()); // Abordagem 2

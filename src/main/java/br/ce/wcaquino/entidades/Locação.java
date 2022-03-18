@@ -3,7 +3,7 @@ package br.ce.wcaquino.entidades;
 import java.util.Date;
 import java.util.List;
 
-public class Locacao {
+public class Locação {
 
     private Usuario usuario;
     private List<Filme> filmes;

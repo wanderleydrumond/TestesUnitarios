@@ -1,7 +1,8 @@
 package br.ce.wcaquino.servicos;
 
+import br.ce.wcaquino.daos.LocaçãoDAO;
 import br.ce.wcaquino.entidades.Filme;
-import br.ce.wcaquino.entidades.Locacao;
+import br.ce.wcaquino.entidades.Locação;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import br.ce.wcaquino.exceptions.LocadoraException;
@@ -15,9 +16,11 @@ import static br.ce.wcaquino.utils.DataUtils.adicionarDias;
 /**
  * Classe de execução do sistema.
  */
-public class LocacaoService {
+public class LocaçãoService {
 
-    protected Date dataLocacao = new Date(); // Modificador de acesso protected para poder ter acesso na classe de teste.
+    protected Date dataLocação = new Date(); // Modificador de acesso protected para poder ter acesso na classe de teste.
+
+    private LocaçãoDAO locaçãoDAO;
 
     /**
      * Inicializa o sistema.
@@ -37,12 +40,12 @@ public class LocacaoService {
 
         List<Filme> filmes = new ArrayList<>(Arrays.asList(filme1, filme2, filme3, filme4, filme5, filme6));
 
-        LocacaoService locacaoService = new LocacaoService();
+        LocaçãoService locaçãoService = new LocaçãoService();
 
 //		When
-        Locacao locacao = null;
+        Locação locação = null;
         try {
-            locacao = locacaoService.alugarFilme(usuario, filmes);
+            locação = locaçãoService.alugarFilme(usuario, filmes);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -50,9 +53,9 @@ public class LocacaoService {
 //		Then
         // Verifica o preço da locação
         filmes.stream().filter(filmeElement -> filmeElement.getPrecoLocacao() == 5. || filmeElement.getPrecoLocacao() == 6.5 || filmeElement.getPrecoLocacao() == 7. || filmeElement.getPrecoLocacao() == 10.).map(filmeElement -> true).forEach(System.out::println);
-        assert locacao != null;
-        System.out.println(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date())); // Verifica a data da locação
-        System.out.println(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1))); // Verifica a data de retorno da locação
+        assert locação != null;
+        System.out.println(DataUtils.isMesmaData(locação.getDataLocacao(), new Date())); // Verifica a data da locação
+        System.out.println(DataUtils.isMesmaData(locação.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1))); // Verifica a data de retorno da locação
     }
 
     /**
@@ -60,9 +63,9 @@ public class LocacaoService {
      *
      * @param usuario O usuário do qual deve ser feita a modificação.
      * @param filmes  A lista de filmes do qual deve ser feita a modificação.
-     * @return A <code>Locacao</code> atualizada.
+     * @return A <code>Locação</code> atualizada.
      */
-    public Locacao alugarFilme(Usuario usuario, @NotNull List<Filme> filmes) throws FilmeSemEstoqueException, LocadoraException {
+    public Locação alugarFilme(Usuario usuario, @NotNull List<Filme> filmes) throws FilmeSemEstoqueException, LocadoraException {
         if (usuario == null) {
             throw new LocadoraException("Usuário vazio");
         }
@@ -77,10 +80,10 @@ public class LocacaoService {
             }
         }
 
-        Locacao locacao = new Locacao();
-        locacao.setFilmes(filmes);
-        locacao.setUsuario(usuario);
-        locacao.setDataLocacao(dataLocacao);
+        Locação locação = new Locação();
+        locação.setFilmes(filmes);
+        locação.setUsuario(usuario);
+        locação.setDataLocacao(dataLocação);
 
         Double valorTotal = 0., auxiliar;
         int index = 0;
@@ -96,7 +99,7 @@ public class LocacaoService {
             valorTotal += auxiliar;
             index++;
         }
-        locacao.setValor(valorTotal);
+        locação.setValor(valorTotal);
 
         //Entrega no dia seguinte
         Date dataEntrega = new Date();
@@ -104,10 +107,10 @@ public class LocacaoService {
         if (DataUtils.verificarDiaSemana(dataEntrega, Calendar.SUNDAY)) {
             dataEntrega = adicionarDias(dataEntrega, 1);
         }
-        locacao.setDataRetorno(dataEntrega);
+        locação.setDataRetorno(dataEntrega);
 
         //Salvando a locação...
-        //TODO adicionar método para salvar
+        locaçãoDAO.salvar(locação);
 
         /*Princípios dos testes unitários
          * Fast -> os resultados precisam ser exibidos imediatamente para garantir que sempre serão executados no momento correto.
@@ -116,6 +119,10 @@ public class LocacaoService {
          * Self-Verifying -> O teste deve ser capaz de verificar quando sua execução foi correta ou quando a mesma falhou ou deu erro.
          * Timely -> O teste deve ser criado no momento certo.*/
 
-        return locacao;
+        return locação;
+    }
+
+    public void setLocaçãoDAO(LocaçãoDAO locaçãoDAO) {
+        this.locaçãoDAO = locaçãoDAO;
     }
 }

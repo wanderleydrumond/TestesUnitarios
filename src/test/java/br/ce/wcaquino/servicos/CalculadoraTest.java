@@ -64,11 +64,12 @@ class CalculadoraTest {
     }
 
     @Test
+    @DisplayName("Tratar a situação dos valores serem strings")
     void deveDividir() {
         String dividendo = "6";
-        String dividor = "3";
+        String divisor = "3";
 
-        int resultado = calculadora.dividir(dividendo,dividor);
+        int resultado = calculadora.dividir(dividendo,divisor);
 
         Assertions.assertEquals(2, resultado);
     }

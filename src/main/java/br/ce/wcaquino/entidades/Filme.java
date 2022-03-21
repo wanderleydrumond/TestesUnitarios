@@ -1,14 +1,39 @@
 package br.ce.wcaquino.entidades;
 
+/**
+ * Entidade de filme.
+ *
+ * @author Wagner Aquino
+ * @version 1.0
+ */
 public class Filme {
 
+    /**
+     * Nome do filme.
+     */
     private String nome;
+    /**
+     * Quantidade em estoque.
+     */
     private Integer estoque;
+    /**
+     * Preço de locação.
+     */
     private Double precoLocacao;
 
+    /**
+     * Construtor vazio.
+     */
     public Filme() {
     }
 
+    /**
+     * Construtor cheio.
+     *
+     * @param nome Nome do filme
+     * @param estoque Quantidade em estoque
+     * @param precoLocacao Preço do exemplar
+     */
     public Filme(String nome, Integer estoque, Double precoLocacao) {
         this.nome = nome;
         this.estoque = estoque;

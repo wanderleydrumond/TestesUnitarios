@@ -4,7 +4,7 @@ import br.ce.wcaquino.entidades.Filme;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Objeto que cria um filme.
+ * Objeto que cria um <code>Filme</code>.
  * @author Wanderley Drumond
  * @since 16/03/2022
  * @version 1.0
@@ -13,7 +13,7 @@ public class FilmeBuilder {
     private Filme filme;
 
     /**
-     * Método construtor privado para somente o próprio <i>Builder</i> possa criar instâncias de si mesmo.
+     * Método construtor <b>privado</b> para que somente o próprio <i>Builder</i> possa criar instâncias de si mesmo.
      */
     private FilmeBuilder() {}
 
@@ -33,7 +33,7 @@ public class FilmeBuilder {
         return filmeBuilder;
     }
 
-    public static FilmeBuilder umFilmeSemEstoque() {
+    public static @NotNull FilmeBuilder umFilmeSemEstoque() {
         FilmeBuilder filmeBuilder = new FilmeBuilder();
         filmeBuilder.filme = new Filme();
         filmeBuilder.filme.setNome("Avengers, Infinity War");

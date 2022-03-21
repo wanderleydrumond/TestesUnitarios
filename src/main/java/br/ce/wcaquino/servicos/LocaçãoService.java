@@ -35,6 +35,11 @@ public class LocaçãoService {
     private SPCService spcService;
 
     /**
+     * Atributo cuja finalidade é dar acesso aos métodos da interface <code>EmailService</code>.
+     */
+    private EmailService emailService;
+
+    /**
      * Inicializa o sistema.
      *
      * @param args Argumento padrão do método main.
@@ -139,6 +144,16 @@ public class LocaçãoService {
     }
 
     /**
+     * Notifica todos os usuários que deveriam ter devolvido os filmes mais ainda não o fizeram.
+     */
+    public void notificarAtrasos() {
+        List<Locação> locações = locaçãoDAO.obterLocaçõesPendentes();
+        for (Locação locaçãoElemento : locações) {
+            emailService.notificarAtraso(locaçãoElemento.getUsuario());
+        }
+    }
+
+    /**
      * Instancia um objeto <code>LocaçãoDAO</code> através de injeção de dependência.
      *
      * @param locaçãoDAO objeto <code>LocaçãoDAO</code> a ser instanciado.
@@ -147,12 +162,21 @@ public class LocaçãoService {
         this.locaçãoDAO = locaçãoDAO;
     }
 
-    /**Instancia um objeto <code>SPCService</code> através de injeção de dependência.
-     *
+    /**
+     * Instancia um objeto <code>SPCService</code> através de injeção de dependência.
      *
      * @param spcService objeto <code>SPCService</code> a ser instanciado.
      */
     public void setSpcService(SPCService spcService) {
         this.spcService = spcService;
+    }
+
+    /**
+     * Instancia um objeto <code>EmailService</code> através de injeção de dependência.
+     *
+     * @param emailService objeto <code>EmailService</code> a ser instanciado.
+     */
+    public void setEmailService (EmailService emailService) {
+        this.emailService = emailService;
     }
 }

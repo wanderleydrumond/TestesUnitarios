@@ -1,9 +1,9 @@
 package br.ce.wcaquino.servicos;
 
 import br.ce.wcaquino.builders.FilmeBuilder;
+import br.ce.wcaquino.builders.LocaçãoBuilder;
 import br.ce.wcaquino.builders.UsuárioBuilder;
 import br.ce.wcaquino.daos.LocaçãoDAO;
-import br.ce.wcaquino.daos.LocaçãoDAOFake;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locação;
 import br.ce.wcaquino.entidades.Usuario;
@@ -28,8 +28,8 @@ import static br.ce.wcaquino.utils.DataUtils.obterDataComDiferencaDias;
  * Trata aspectos básicos de testes.
  *
  * @author Wanderley Drumond
- * @since 05/03/2022
  * @version 4.1
+ * @since 05/03/2022
  */
 class LocaçãoServiceTest {
     private List<Filme> filmes;
@@ -37,6 +37,7 @@ class LocaçãoServiceTest {
     private LocaçãoService locaçãoService;
     private SPCService spcService;
     private LocaçãoDAO locaçãoDAO;
+    private EmailService emailService;
 
     /**
      * Visto que há mais de um teste utilizando <i>soft assertions</i>, eu garanti que, para cada teste, uma nova instância é criada.
@@ -50,6 +51,8 @@ class LocaçãoServiceTest {
         locaçãoService.setLocaçãoDAO(locaçãoDAO);
         spcService = Mockito.mock(SPCService.class);
         locaçãoService.setSpcService(spcService);
+        emailService = Mockito.mock(EmailService.class);
+        locaçãoService.setEmailService(emailService);
     }
 
     /**
@@ -153,24 +156,43 @@ class LocaçãoServiceTest {
      * Teste que verifica se o usuário está negativado. Caso esteja, lançará uma exceção. O teste está a espera desta exceção.
      *
      * @throws FilmeSemEstoqueException caso o valor do estoque seja nulo.
-     * @throws LocadoraException caso o valor do <code>Usuario</code> seja nulo.
+     * @throws LocadoraException        caso o valor do <code>Usuario</code> seja nulo.
      */
     @Test
     @DisplayName("Verificar se o usuário está negativado no SPC")
-    void nãoDeveAlugarFilmeParaNegativadoSPC() throws FilmeSemEstoqueException, LocadoraException {
+    void nãoDeveAlugarFilmeParaNegativadoSPC() {
 //        Given
-        Usuario usuario = UsuárioBuilder.umUsuário().agora();
-        Usuario usuario1 = UsuárioBuilder.umUsuário().comNome("Anna Helena").agora(); // Caso utilize este usuário o teste falhará.
+        Usuario usuarioCorreto = UsuárioBuilder.umUsuário().agora();
+        Usuario usuarioErrado = UsuárioBuilder.umUsuário().comNome("Anna Helena").agora(); // Caso utilize este usuário o teste falhará.
         List<Filme> filmes = List.of(FilmeBuilder.umFilme().agora());
 
-        Mockito.when(spcService.possuiNegativação(usuario)).thenReturn(true); // Manipulando o Mockito para que a devida resposta seja dada.
+        Mockito.when(spcService.possuiNegativação(usuarioCorreto)).thenReturn(true); // Manipulando o Mockito para que a devida resposta seja dada.
 //        When
         try {
-            locaçãoService.alugarFilme(usuario,filmes);
+            locaçãoService.alugarFilme(usuarioCorreto, filmes);
+//        Then
             Assertions.fail();
         } catch (FilmeSemEstoqueException | LocadoraException exception) {
             MatcherAssert.assertThat(exception.getMessage(), CoreMatchers.is("Usuário negativado"));
 //            exception.printStackTrace();
         }
+        Mockito.verify(spcService).possuiNegativação(usuarioCorreto);
+    }
+
+    /**
+     * Teste que verifica se foi envido e-mail para um determinado usuário que deveria ter entregue a lista de filmes, mas ainda não o fez.
+     */
+    @Test
+    @DisplayName("Verificar se o e-mail foi enviado àqueles que tem locações atrasadas")
+    void deveEnviarEmailParaLocaçõesAtrasadas() {
+//        Given
+        Usuario usuarioCorreto = UsuárioBuilder.umUsuário().agora();
+        Usuario usuarioErrado = UsuárioBuilder.umUsuário().comNome("Anna Helena").agora();
+        List<Locação> locações = List.of(LocaçãoBuilder.umaLocação().comUsuário(usuarioCorreto).devolverEm(obterDataComDiferencaDias(-2)).agora());
+        Mockito.when(locaçãoDAO.obterLocaçõesPendentes()).thenReturn(locações);
+//        When
+        locaçãoService.notificarAtrasos();
+//
+        Mockito.verify(emailService).notificarAtraso(usuarioCorreto);
     }
 }

@@ -122,6 +122,11 @@ public class LocaçãoService {
         return locação;
     }
 
+    /**
+     * Instancia um objeto <code>LocaçãoDAO</code>
+     *
+     * @param locaçãoDAO objeto a ser instanciado
+     */
     public void setLocaçãoDAO(LocaçãoDAO locaçãoDAO) {
         this.locaçãoDAO = locaçãoDAO;
     }

@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -46,7 +47,7 @@ class LocaçãoServiceTest {
         softAssertions = new SoftAssertions();
 //        Given
         locaçãoService = new LocaçãoService();
-        LocaçãoDAO locaçãoDAO = new LocaçãoDAOFake();
+        LocaçãoDAO locaçãoDAO = Mockito.mock(LocaçãoDAO.class);
         locaçãoService.setLocaçãoDAO(locaçãoDAO);
     }
 

@@ -2,7 +2,6 @@ package br.ce.wcaquino.servicos;
 
 import br.ce.wcaquino.builders.FilmeBuilder;
 import br.ce.wcaquino.daos.LocaçãoDAO;
-import br.ce.wcaquino.daos.LocaçãoDAOFake;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locação;
 import br.ce.wcaquino.entidades.Usuario;
@@ -15,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,8 +24,8 @@ import java.util.List;
  * Classe que contém um único teste que executa na mesma incidência quanto o número de parâmetros definidos. <u>Teste parametrizado</u>
  *
  * @author Wanderley Drumond
- * @since 12/03/2022
  * @version 3.1
+ * @since 12/03/2022
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CálculoValorLocaçãoTest {
@@ -35,7 +35,7 @@ public class CálculoValorLocaçãoTest {
 
     private LocaçãoService locaçãoService;
     /**
-     * Incrementador para o teste <code>deveCalcularValorLocacaoConsiderandoDescontos</code>
+     * Incrementador para o teste <code>deveCalcularValorLocaçãoConsiderandoDescontos</code>
      */
     private Integer índice = 0;
     /**
@@ -52,7 +52,7 @@ public class CálculoValorLocaçãoTest {
         locaçãoService = new LocaçãoService();
         filmes = new ArrayList<>(getFilmes().get(índice));
 
-        LocaçãoDAO locaçãoDAO = new LocaçãoDAOFake();
+        LocaçãoDAO locaçãoDAO = Mockito.mock(LocaçãoDAO.class);
         locaçãoService.setLocaçãoDAO(locaçãoDAO);
     }
 

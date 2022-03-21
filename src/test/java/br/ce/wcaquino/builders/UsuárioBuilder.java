@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
  * Objeto que cria um usuário.
  * @author Wanderley Drumond
  * @since 16/03/2022
- * @version 1.0
+ * @version 2.0
  */
 public class UsuárioBuilder {
     private Usuario usuario;
@@ -29,6 +29,17 @@ public class UsuárioBuilder {
         usuárioBuilder.usuario = new Usuario();
         usuárioBuilder.usuario.setNome("Wanderley");
         return usuárioBuilder;
+    }
+
+    /**
+     * Atualiza o nome do <code>Usuario</code>, concatenando este método para dar mais fluidez na leitura.
+     *
+     * @param nome o nome que será atualizado.
+     * @return a mesma instância de <code>UsuárioBuilder</code>
+     */
+    public UsuárioBuilder comNome(String nome) {
+        usuario.setNome(nome);
+        return this;
     }
 
     /**

@@ -29,8 +29,14 @@ import java.util.List;
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CálculoValorLocaçãoTest {
+    /**
+     * <code>Usuario</code> que alugará os filmes.
+     */
     Usuario usuário = new Usuario("Wanderley");
 
+    /**
+     * Lista de filmes
+     */
     List<Filme> filmes;
 
     private LocaçãoService locaçãoService;
@@ -54,6 +60,8 @@ public class CálculoValorLocaçãoTest {
 
         LocaçãoDAO locaçãoDAO = Mockito.mock(LocaçãoDAO.class);
         locaçãoService.setLocaçãoDAO(locaçãoDAO);
+        SPCService spcService = Mockito.mock(SPCService.class);
+        locaçãoService.setSpcService(spcService);
     }
 
     /**

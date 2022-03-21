@@ -14,10 +14,7 @@ import br.ce.wcaquino.utils.DataUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 import java.util.*;
@@ -38,6 +35,8 @@ class LocaçãoServiceTest {
     private List<Filme> filmes;
     private SoftAssertions softAssertions;
     private LocaçãoService locaçãoService;
+    private SPCService spcService;
+    private LocaçãoDAO locaçãoDAO;
 
     /**
      * Visto que há mais de um teste utilizando <i>soft assertions</i>, eu garanti que, para cada teste, uma nova instância é criada.
@@ -47,8 +46,10 @@ class LocaçãoServiceTest {
         softAssertions = new SoftAssertions();
 //        Given
         locaçãoService = new LocaçãoService();
-        LocaçãoDAO locaçãoDAO = Mockito.mock(LocaçãoDAO.class);
+        locaçãoDAO = Mockito.mock(LocaçãoDAO.class);
         locaçãoService.setLocaçãoDAO(locaçãoDAO);
+        spcService = Mockito.mock(SPCService.class);
+        locaçãoService.setSpcService(spcService);
     }
 
     /**
@@ -57,6 +58,7 @@ class LocaçãoServiceTest {
      * @throws Exception exceção que fará o teste dar erro.
      */
     @Test
+    @DisplayName("Aluguel de filmes")
     void testeLocaçãoBemSucedida() throws Exception {
 //      Given
         Assumptions.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY)); // Verifica se hoje não é sábado
@@ -94,6 +96,7 @@ class LocaçãoServiceTest {
      * @throws Exception exceção que fará o teste apresentar erro.
      */
     @Test
+    @DisplayName("Não é possível alugar um filme caso o mesmo não exista no estoque")
     void naoDeveAlugarFilmeSemEstoque_Elegante() throws Exception {
 
 //        Given
@@ -132,6 +135,7 @@ class LocaçãoServiceTest {
      * @throws LocadoraException        quando <code>Usuario</code> for igual a nulo.
      */
     @Test
+    @DisplayName("Devolver o filme na segunda caso alugue no sábado")
     void deveDevolverNaSegundaAoAlugarNoSábado() throws FilmeSemEstoqueException, LocadoraException {
 //        Given
         Assumptions.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY)); // Verifica se hoje é sábado
@@ -143,5 +147,30 @@ class LocaçãoServiceTest {
 //        Then
         MatcherAssert.assertThat(retorno.getDataRetorno(), MatchersPróprios.caiEm(Calendar.MONDAY)); // Abordagem 1
         MatcherAssert.assertThat(retorno.getDataRetorno(), MatchersPróprios.caiNumaSegunda()); // Abordagem 2
+    }
+
+    /**
+     * Teste que verifica se o usuário está negativado. Caso esteja, lançará uma exceção. O teste está a espera desta exceção.
+     *
+     * @throws FilmeSemEstoqueException caso o valor do estoque seja nulo.
+     * @throws LocadoraException caso o valor do <code>Usuario</code> seja nulo.
+     */
+    @Test
+    @DisplayName("Verificar se o usuário está negativado no SPC")
+    void nãoDeveAlugarFilmeParaNegativadoSPC() throws FilmeSemEstoqueException, LocadoraException {
+//        Given
+        Usuario usuario = UsuárioBuilder.umUsuário().agora();
+        Usuario usuario1 = UsuárioBuilder.umUsuário().comNome("Anna Helena").agora(); // Caso utilize este usuário o teste falhará.
+        List<Filme> filmes = List.of(FilmeBuilder.umFilme().agora());
+
+        Mockito.when(spcService.possuiNegativação(usuario)).thenReturn(true); // Manipulando o Mockito para que a devida resposta seja dada.
+//        When
+        try {
+            locaçãoService.alugarFilme(usuario,filmes);
+            Assertions.fail();
+        } catch (FilmeSemEstoqueException | LocadoraException exception) {
+            MatcherAssert.assertThat(exception.getMessage(), CoreMatchers.is("Usuário negativado"));
+//            exception.printStackTrace();
+        }
     }
 }

@@ -18,9 +18,21 @@ import static br.ce.wcaquino.utils.DataUtils.adicionarDias;
  */
 public class LocaçãoService {
 
-    protected Date dataLocação = new Date(); // Modificador de acesso protected para poder ter acesso na classe de teste.
+    /**
+     * Atributo que inicializa com a data atual.
+     * <p>Modificador de acesso protected para poder ter acesso na classe de teste.</p>
+     */
+    protected Date dataLocação = new Date();
 
+    /**
+     * Atributo cuja finalidade é dar acesso aos métodos da interface <code>LocaçãoDAO</code>.
+     */
     private LocaçãoDAO locaçãoDAO;
+
+    /**
+     * Atributo cuja finalidade é dar acesso aos métodos da interface <code>SPCService</code>.
+     */
+    private SPCService spcService;
 
     /**
      * Inicializa o sistema.
@@ -80,6 +92,10 @@ public class LocaçãoService {
             }
         }
 
+        if (spcService.possuiNegativação(usuario)) {
+            throw new LocadoraException("Usuário negativado");
+        }
+
         Locação locação = new Locação();
         locação.setFilmes(filmes);
         locação.setUsuario(usuario);
@@ -123,11 +139,20 @@ public class LocaçãoService {
     }
 
     /**
-     * Instancia um objeto <code>LocaçãoDAO</code>
+     * Instancia um objeto <code>LocaçãoDAO</code> através de injeção de dependência.
      *
-     * @param locaçãoDAO objeto a ser instanciado
+     * @param locaçãoDAO objeto <code>LocaçãoDAO</code> a ser instanciado.
      */
     public void setLocaçãoDAO(LocaçãoDAO locaçãoDAO) {
         this.locaçãoDAO = locaçãoDAO;
+    }
+
+    /**Instancia um objeto <code>SPCService</code> através de injeção de dependência.
+     *
+     *
+     * @param spcService objeto <code>SPCService</code> a ser instanciado.
+     */
+    public void setSpcService(SPCService spcService) {
+        this.spcService = spcService;
     }
 }

@@ -191,13 +191,14 @@ class LocaçãoServiceTest {
         Usuario usuarioAtrasado2 = UsuárioBuilder.umUsuário().comNome("Francisco").agora();
         List<Locação> locações = List.of(LocaçãoBuilder.umaLocação().comUsuário(usuarioAtrasado1).atrasada().agora(),
                 LocaçãoBuilder.umaLocação().comUsuário(usuarioEmDia).agora(),
+                LocaçãoBuilder.umaLocação().comUsuário(usuarioAtrasado2).atrasada().agora(),
                 LocaçãoBuilder.umaLocação().comUsuário(usuarioAtrasado2).atrasada().agora());
         Mockito.when(locaçãoDAO.obterLocaçõesPendentes()).thenReturn(locações);
 //        When
         locaçãoService.notificarAtrasos();
 //
         Mockito.verify(emailService).notificarAtraso(usuarioAtrasado1); // verifica se o e-mail foi enviado
-        Mockito.verify(emailService).notificarAtraso(usuarioAtrasado2); // verifica se o e-mail foi enviado
+        Mockito.verify(emailService, Mockito.times(2)).notificarAtraso(usuarioAtrasado2); // verifica se o e-mail foi enviado
         Mockito.verify(emailService, Mockito.never()).notificarAtraso(usuarioEmDia); // verifica se o e-mail nunca foi enviado
         Mockito.verifyNoMoreInteractions(emailService); // verifica se mais nenhum e-mail foi enviado fora deste escopo.
     }

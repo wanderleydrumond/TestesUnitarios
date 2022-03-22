@@ -16,8 +16,9 @@ public class CalculadoraMockTest {
     @DisplayName("Exibir valores esperados pelo Mockito")
     void testeValoresMockito() {
         Calculadora calculadora = Mockito.mock(Calculadora.class);
-        Mockito.when(calculadora.somarDoisInteiros(1,2)).thenReturn(5);
+        //uma vez um parâmentro do método utiliza um matcher para obter um valor genérico, todos os demais precisarão também usá-lo. Senão dá erro
+        Mockito.when(calculadora.somarDoisInteiros(Mockito.anyInt(),Mockito.anyInt())).thenReturn(5);
 
-        System.out.println(calculadora.somarDoisInteiros(1,2));
+        System.out.println(calculadora.somarDoisInteiros(1,8));
     }
 }

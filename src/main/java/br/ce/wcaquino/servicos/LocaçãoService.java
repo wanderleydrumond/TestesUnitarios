@@ -154,31 +154,4 @@ public class LocaçãoService {
             }
         }
     }
-
-    /**
-     * Instancia um objeto <code>LocaçãoDAO</code> através de injeção de dependência.
-     *
-     * @param locaçãoDAO objeto <code>LocaçãoDAO</code> a ser instanciado.
-     */
-    public void setLocaçãoDAO(LocaçãoDAO locaçãoDAO) {
-        this.locaçãoDAO = locaçãoDAO;
-    }
-
-    /**
-     * Instancia um objeto <code>SPCService</code> através de injeção de dependência.
-     *
-     * @param spcService objeto <code>SPCService</code> a ser instanciado.
-     */
-    public void setSpcService(SPCService spcService) {
-        this.spcService = spcService;
-    }
-
-    /**
-     * Instancia um objeto <code>EmailService</code> através de injeção de dependência.
-     *
-     * @param emailService objeto <code>EmailService</code> a ser instanciado.
-     */
-    public void setEmailService(EmailService emailService) {
-        this.emailService = emailService;
-    }
 }

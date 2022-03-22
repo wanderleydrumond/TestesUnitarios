@@ -15,7 +15,10 @@ import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -28,15 +31,39 @@ import static br.ce.wcaquino.utils.DataUtils.obterDataComDiferencaDias;
  * Trata aspectos básicos de testes.
  *
  * @author Wanderley Drumond
- * @version 5.0
+ * @version 5.1
  * @since 05/03/2022
  */
 class LocaçãoServiceTest {
+    /**
+     * Lista de filmes da locação.
+     */
     private List<Filme> filmes;
+    /**
+     * Objeto que permite a utilização do assertThat.
+     */
     private SoftAssertions softAssertions;
+
+    /**
+     * Objeto que representa a classe de teste.
+     */
+    @InjectMocks
     private LocaçãoService locaçãoService;
+
+    /**
+     * Objeto que contém os métodos de serviço de SPC. Utilizado como apoio de locação.
+     */
+    @Mock
     private SPCService spcService;
+    /**
+     * Objeto que contém os métodos de serviço de locação no que tange à camada de persistência. Utilizado como apoio de locação.
+     */
+    @Mock
     private LocaçãoDAO locaçãoDAO;
+    /**
+     * Objeto que contém os métodos de serviço de e-mail. Utilizado como apoio de locação.
+     */
+    @Mock
     private EmailService emailService;
 
     /**
@@ -46,13 +73,7 @@ class LocaçãoServiceTest {
     void setUp() {
         softAssertions = new SoftAssertions();
 //        Given
-        locaçãoService = new LocaçãoService();
-        locaçãoDAO = Mockito.mock(LocaçãoDAO.class);
-        locaçãoService.setLocaçãoDAO(locaçãoDAO);
-        spcService = Mockito.mock(SPCService.class);
-        locaçãoService.setSpcService(spcService);
-        emailService = Mockito.mock(EmailService.class);
-        locaçãoService.setEmailService(emailService);
+        MockitoAnnotations.openMocks(this);
     }
 
     /**

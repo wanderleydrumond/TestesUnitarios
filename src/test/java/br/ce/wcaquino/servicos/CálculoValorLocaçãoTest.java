@@ -14,7 +14,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.Mockito;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +26,7 @@ import java.util.List;
  * Classe que contém um único teste que executa na mesma incidência quanto o número de parâmetros definidos. <u>Teste parametrizado</u>
  *
  * @author Wanderley Drumond
- * @version 3.1
+ * @version 3.2
  * @since 12/03/2022
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -38,7 +40,20 @@ public class CálculoValorLocaçãoTest {
      * Lista de filmes
      */
     List<Filme> filmes;
-
+    /**
+     * Objeto que contém os métodos de serviço de locação no que tange à camada de persistência. Utilizado como apoio de locação.
+     */
+    @Mock
+    LocaçãoDAO locaçãoDAO;
+    /**
+     * Objeto que contém os métodos de serviço de SPC. Utilizado como apoio de locação.
+     */
+    @Mock
+    SPCService spcService;
+    /**
+     * Objeto que representa a classe que será testada.
+     */
+    @InjectMocks
     private LocaçãoService locaçãoService;
     /**
      * Incrementador para o teste <code>deveCalcularValorLocaçãoConsiderandoDescontos</code>
@@ -55,13 +70,8 @@ public class CálculoValorLocaçãoTest {
     @BeforeEach
     void setup() {
 //        Given
-        locaçãoService = new LocaçãoService();
+        MockitoAnnotations.openMocks(this);
         filmes = new ArrayList<>(getFilmes().get(índice));
-
-        LocaçãoDAO locaçãoDAO = Mockito.mock(LocaçãoDAO.class);
-        locaçãoService.setLocaçãoDAO(locaçãoDAO);
-        SPCService spcService = Mockito.mock(SPCService.class);
-        locaçãoService.setSpcService(spcService);
     }
 
     /**

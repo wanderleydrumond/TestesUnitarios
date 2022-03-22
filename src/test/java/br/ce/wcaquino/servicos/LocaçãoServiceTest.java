@@ -166,7 +166,7 @@ class LocaçãoServiceTest {
         Usuario usuarioErrado = UsuárioBuilder.umUsuário().comNome("Anna Helena").agora(); // Caso utilize este usuário o teste falhará.
         List<Filme> filmes = List.of(FilmeBuilder.umFilme().agora());
 
-        Mockito.when(spcService.possuiNegativação(usuarioCorreto)).thenReturn(true); // Manipulando o Mockito para que a devida resposta seja dada.
+        Mockito.when(spcService.possuiNegativação(Mockito.any(Usuario.class))).thenReturn(true); // Manipulando o Mockito para que a devida resposta seja dada de forma genérica.
 //        When
         try {
             locaçãoService.alugarFilme(usuarioCorreto, filmes);

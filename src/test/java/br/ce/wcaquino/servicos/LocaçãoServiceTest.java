@@ -196,7 +196,9 @@ class LocaçãoServiceTest {
         Mockito.when(locaçãoDAO.obterLocaçõesPendentes()).thenReturn(locações);
 //        When
         locaçãoService.notificarAtrasos();
-//
+
+//        Then
+        Mockito.verify(emailService, Mockito.times(3)).notificarAtraso(Mockito.any(Usuario.class)); //Verificação mais genérica
         Mockito.verify(emailService).notificarAtraso(usuarioAtrasado1); // verifica se o e-mail foi enviado
         Mockito.verify(emailService, Mockito.atLeastOnce()).notificarAtraso(usuarioAtrasado2); // verifica se o e-mail foi enviado pelo menos uma vez
         Mockito.verify(emailService, Mockito.never()).notificarAtraso(usuarioEmDia); // verifica se o e-mail nunca foi enviado

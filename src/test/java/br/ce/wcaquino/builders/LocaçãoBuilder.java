@@ -109,6 +109,17 @@ public class LocaçãoBuilder {
     }
 
     /**
+     * Define a locação com data de retorno atrasada.
+     *
+     * @return a mesma instância de <code>LocaçãoBuilder</code> com a data de retorno e de locação atualizadas.
+     */
+    public LocaçãoBuilder atrasada() {
+        elementoLocação.setDataLocacao(DataUtils.obterDataComDiferencaDias(-4));
+        elementoLocação.setDataRetorno(DataUtils.obterDataComDiferencaDias(-2));
+        return this;
+    }
+
+    /**
      * Atualiza o estado do objeto <code>LocaçãoBuilder</code>.
      * <ul>
      *     <li>Atualiza o valor da locação.</li>

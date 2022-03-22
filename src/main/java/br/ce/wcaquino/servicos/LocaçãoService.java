@@ -149,7 +149,9 @@ public class LocaçãoService {
     public void notificarAtrasos() {
         List<Locação> locações = locaçãoDAO.obterLocaçõesPendentes();
         for (Locação locaçãoElemento : locações) {
-            emailService.notificarAtraso(locaçãoElemento.getUsuario());
+            if (locaçãoElemento.getDataRetorno().before(new Date())) {
+                emailService.notificarAtraso(locaçãoElemento.getUsuario());
+            }
         }
     }
 
@@ -176,7 +178,7 @@ public class LocaçãoService {
      *
      * @param emailService objeto <code>EmailService</code> a ser instanciado.
      */
-    public void setEmailService (EmailService emailService) {
+    public void setEmailService(EmailService emailService) {
         this.emailService = emailService;
     }
 }

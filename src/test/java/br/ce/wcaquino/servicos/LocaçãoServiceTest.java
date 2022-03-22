@@ -28,7 +28,7 @@ import static br.ce.wcaquino.utils.DataUtils.obterDataComDiferencaDias;
  * Trata aspectos básicos de testes.
  *
  * @author Wanderley Drumond
- * @version 4.1
+ * @version 5.0
  * @since 05/03/2022
  */
 class LocaçãoServiceTest {
@@ -186,13 +186,17 @@ class LocaçãoServiceTest {
     @DisplayName("Verificar se o e-mail foi enviado àqueles que tem locações atrasadas")
     void deveEnviarEmailParaLocaçõesAtrasadas() {
 //        Given
-        Usuario usuarioCorreto = UsuárioBuilder.umUsuário().agora();
-        Usuario usuarioErrado = UsuárioBuilder.umUsuário().comNome("Anna Helena").agora();
-        List<Locação> locações = List.of(LocaçãoBuilder.umaLocação().comUsuário(usuarioCorreto).devolverEm(obterDataComDiferencaDias(-2)).agora());
+        Usuario usuarioAtrasado1 = UsuárioBuilder.umUsuário().agora();
+        Usuario usuarioEmDia = UsuárioBuilder.umUsuário().comNome("Anna Helena").agora();
+        Usuario usuarioAtrasado2 = UsuárioBuilder.umUsuário().comNome("Francisco").agora();
+        List<Locação> locações = List.of(LocaçãoBuilder.umaLocação().comUsuário(usuarioAtrasado1).atrasada().agora(),
+                LocaçãoBuilder.umaLocação().comUsuário(usuarioEmDia).agora(),
+                LocaçãoBuilder.umaLocação().comUsuário(usuarioAtrasado2).atrasada().agora());
         Mockito.when(locaçãoDAO.obterLocaçõesPendentes()).thenReturn(locações);
 //        When
         locaçãoService.notificarAtrasos();
 //
-        Mockito.verify(emailService).notificarAtraso(usuarioCorreto);
+        Mockito.verify(emailService).notificarAtraso(usuarioAtrasado1); // verifica se o e-mail foi enviado
+        Mockito.verify(emailService).notificarAtraso(usuarioAtrasado2); // verifica se o e-mail foi enviado
     }
 }

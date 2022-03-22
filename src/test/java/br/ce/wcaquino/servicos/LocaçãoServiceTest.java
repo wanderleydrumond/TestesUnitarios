@@ -198,7 +198,7 @@ class LocaçãoServiceTest {
         locaçãoService.notificarAtrasos();
 //
         Mockito.verify(emailService).notificarAtraso(usuarioAtrasado1); // verifica se o e-mail foi enviado
-        Mockito.verify(emailService, Mockito.times(2)).notificarAtraso(usuarioAtrasado2); // verifica se o e-mail foi enviado
+        Mockito.verify(emailService, Mockito.atLeast(2)).notificarAtraso(usuarioAtrasado2); // verifica se o e-mail foi enviado pelo menos duas vezes
         Mockito.verify(emailService, Mockito.never()).notificarAtraso(usuarioEmDia); // verifica se o e-mail nunca foi enviado
         Mockito.verifyNoMoreInteractions(emailService); // verifica se mais nenhum e-mail foi enviado fora deste escopo.
     }

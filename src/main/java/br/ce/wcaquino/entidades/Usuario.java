@@ -3,7 +3,7 @@ package br.ce.wcaquino.entidades;
 /**
  * Entidade de usuário.
  *
- * @author Wagner Aquino
+ * @author Wagner Costa Aquino
  * @version 1.1
  */
 public class Usuario {

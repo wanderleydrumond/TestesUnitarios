@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Entidade de locação.
  *
- * @author Wagner Aquino
+ * @author Wagner Costa Aquino
  * @version 1.0
  */
 public class Locação {

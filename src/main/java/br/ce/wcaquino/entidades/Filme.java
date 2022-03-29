@@ -3,7 +3,7 @@ package br.ce.wcaquino.entidades;
 /**
  * Entidade de filme.
  *
- * @author Wagner Aquino
+ * @author Wagner Costa Aquino
  * @version 1.0
  */
 public class Filme {

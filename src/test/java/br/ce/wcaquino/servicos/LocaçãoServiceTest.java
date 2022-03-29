@@ -31,7 +31,7 @@ import static br.ce.wcaquino.utils.DataUtils.obterDataComDiferencaDias;
  * Trata aspectos básicos de testes.
  *
  * @author Wanderley Drumond
- * @version 5.1
+ * @version 5.2
  * @since 05/03/2022
  */
 class LocaçãoServiceTest {
@@ -77,12 +77,12 @@ class LocaçãoServiceTest {
     }
 
     /**
-     * Caso o teste não esteja esperando uma exceção, a melhor opção é deixar que o JUnit a trate.
+     * Caso o teste não esteja esperando uma exceção, a melhor opção é deixar que o JUnit a trate. 😁
      *
      * @throws Exception exceção que fará o teste dar erro.
      */
     @Test
-    @DisplayName("Aluguel de filmes")
+    @DisplayName("Aluguel de filmes \uD83D\uDE01")
     void testeLocaçãoBemSucedida() throws Exception {
 //      Given
         Assumptions.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY)); // Verifica se hoje não é sábado
@@ -111,16 +111,16 @@ class LocaçãoServiceTest {
         softAssertions.assertThat(isMesmaData(locação.getDataRetorno(), obterDataComDiferencaDias(1))).isEqualTo(true);
 
         softAssertions.assertAll();
-    }
+}
 
     /**
-     * Este está esperando uma exceção.
-     * Solução elegante.
+     * Este está esperando uma exceção. 🤣
+     * <p>Solução elegante.</p>
      *
      * @throws Exception exceção que fará o teste apresentar erro.
      */
     @Test
-    @DisplayName("Não é possível alugar um filme caso o mesmo não exista no estoque")
+    @DisplayName("Não é possível alugar um filme caso o mesmo não exista no estoque \uD83E\uDD23")
     void naoDeveAlugarFilmeSemEstoque_Elegante() throws Exception {
 
 //        Given
@@ -133,12 +133,13 @@ class LocaçãoServiceTest {
     }
 
     /**
-     * Este está esperando uma exceção.
-     * Solução robusta.
+     * Este está esperando uma exceção. 😆
+     * <p>Solução robusta.</p>
      *
      * @throws FilmeSemEstoqueException exceção que fará o teste apresentar falha.
      */
     @Test
+    @DisplayName("Não é possível realizar uma locação sem usuários \uD83D\uDE06")
     void naoDeveAlugarFilmesSemUsuario_Robusta() throws FilmeSemEstoqueException { // Deixo o JUnit tratar esta exceção
         filmes = new ArrayList<>(Arrays.asList(FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora(), FilmeBuilder.umFilme().agora()));
 //        When
@@ -153,13 +154,13 @@ class LocaçãoServiceTest {
     }
 
     /**
-     * Se o filme for alugado no sábado, a devolução deve ser na segunda.
+     * Se o filme for alugado no sábado, a devolução deve ser na segunda. 😉
      *
      * @throws FilmeSemEstoqueException quando algum ‘item’ da lista de filmes tiver estoque igual a 0.
      * @throws LocadoraException        quando <code>Usuario</code> for igual a nulo.
      */
     @Test
-    @DisplayName("Devolver o filme na segunda caso alugue no sábado")
+    @DisplayName("Devolver o filme na segunda caso alugue no sábado \uD83D\uDE09")
     void deveDevolverNaSegundaAoAlugarNoSábado() throws FilmeSemEstoqueException, LocadoraException {
 //        Given
         Assumptions.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY)); // Verifica se hoje é sábado
@@ -174,13 +175,13 @@ class LocaçãoServiceTest {
     }
 
     /**
-     * Teste que verifica se o usuário está negativado. Caso esteja, lançará uma exceção. O teste está a espera desta exceção.
+     * Teste que verifica se o usuário está negativado. Caso esteja, lançará uma exceção. O teste está a espera desta exceção. 🙃
      *
      * @throws FilmeSemEstoqueException caso o valor do estoque seja nulo.
      * @throws LocadoraException        caso o valor do <code>Usuario</code> seja nulo.
      */
     @Test
-    @DisplayName("Verificar se o usuário está negativado no SPC")
+    @DisplayName("Verificar se o usuário está negativado no SPC \uD83D\uDE43")
     void nãoDeveAlugarFilmeParaNegativadoSPC() {
 //        Given
         Usuario usuarioCorreto = UsuárioBuilder.umUsuário().agora();
@@ -201,10 +202,10 @@ class LocaçãoServiceTest {
     }
 
     /**
-     * Teste que verifica se foi envido e-mail para um determinado usuário que deveria ter entregue a lista de filmes, mas ainda não o fez.
+     * Teste que verifica se foi envido e-mail para um determinado usuário que deveria ter entregue a lista de filmes, mas ainda não o fez 🤓.
      */
     @Test
-    @DisplayName("Verificar se o e-mail foi enviado àqueles que tem locações atrasadas")
+    @DisplayName("Verificar se o e-mail foi enviado àqueles que tem locações atrasadas \uD83E\uDD13")
     void deveEnviarEmailParaLocaçõesAtrasadas() {
 //        Given
         Usuario usuarioAtrasado1 = UsuárioBuilder.umUsuário().agora();

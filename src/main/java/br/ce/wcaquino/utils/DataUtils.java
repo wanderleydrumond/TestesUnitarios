@@ -14,7 +14,7 @@ public class DataUtils {
 
     /**
      * Retorna a data enviada por parâmetro com a adição dos dias desejados.
-     * A Data pode estar no futuro (dias > 0) ou no passado (dias < 0).
+     * A Data pode estar no futuro (dias > 0) ou no passado (dias &lt; 0).
      *
      * @param data A data atual.
      * @param dias Os dias que será realizada a diferença.

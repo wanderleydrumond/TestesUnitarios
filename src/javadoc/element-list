@@ -1,0 +1,8 @@
+br.ce.wcaquino
+br.ce.wcaquino.builders
+br.ce.wcaquino.daos
+br.ce.wcaquino.entidades
+br.ce.wcaquino.exceptions
+br.ce.wcaquino.matchers
+br.ce.wcaquino.servicos
+br.ce.wcaquino.utils

@@ -29,6 +29,7 @@
 a.ui-button:active,
 .ui-button:active,
 .ui-button.ui-state-active:hover {
-    /* Overrides the color of selection used in jQuery UI */
-    background: #F8981D;
+  /* Overrides the color of selection used in jQuery UI */
+  background: rgb(147, 37, 99);
+  color: #50fa7b;
 }

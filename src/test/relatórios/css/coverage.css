@@ -20,41 +20,43 @@
 }
 
 body {
-  background-color: #fff;
+  background-color: #3c4556;
   font-family: helvetica neue, tahoma, arial, sans-serif;
   font-size: 82%;
-  color: #151515;
+  color: #f8f8f2;
 }
 
 h1 {
   margin: 0.5em 0;
-  color: #010101;
+  color: #f8f8f2;
   font-weight: normal;
   font-size: 18px;
 }
 
 h2 {
   margin: 0.5em 0;
-  color: #010101;
+  color: #f8f8f2;
   font-weight: normal;
   font-size: 16px;
 }
 
 a {
-  color: #1564C2;
+  color: #8be9fd;
   text-decoration: none;
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+  color: #50fa7b;
+  font-weight: bold;
 }
 
 i {
-  background-color: #eee;
+  background-color: #3c4556;
 }
 
 span.separator {
-  color: #9BA9BA;
+  color: #9ba9ba;
   padding-left: 5px;
   padding-right: 5px;
 }
@@ -72,17 +74,18 @@ table.overallStats {
   width: 20%;
 }
 
-table.coverageStats td, table.coverageStats th {
+table.coverageStats td,
+table.coverageStats th {
   padding: 4px 2px;
   border-bottom: 1px solid #ccc;
 }
 
 table.coverageStats th {
-  background-color: #959BA4;
+  background-color: rgb(96, 113, 164);
   border: none;
   font-weight: bold;
   text-align: left;
-  color: #FFF;
+  color: #fff;
 }
 
 table.coverageStats th.coverageStat {
@@ -90,7 +93,7 @@ table.coverageStats th.coverageStat {
 }
 
 table.coverageStats th a {
-  color: #FFF;
+  color: #fff;
 }
 
 table.coverageStats th a:hover {
@@ -108,7 +111,7 @@ table.coverageStats th.sortedAsc a {
 }
 
 div.footer {
-  margin: 2em .5em;
+  margin: 2em 0.5em;
   font-size: 85%;
   text-align: left;
   line-height: 140%;
@@ -116,8 +119,9 @@ div.footer {
 
 div.sourceCode {
   width: 100%;
-  border: 1px solid #ccc;
-  font: normal 12px 'Menlo', 'Bitstream Vera Sans Mono', 'Courier New', 'Courier', monospace;
+  border: 1px solid rgb(147, 37, 99);
+  font: normal 12px "Menlo", "Bitstream Vera Sans Mono", "Courier New",
+    "Courier", monospace;
   white-space: pre;
 }
 
@@ -130,39 +134,45 @@ div.sourceCode i {
   float: left;
   width: 3em;
   padding-right: 3px;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid rgb(147, 37, 99);
   font-style: normal;
   text-align: right;
 }
 
 div.sourceCode i.no-highlight span.number {
-  color: #151515;
+  color: #f8f8f2;
 }
 
-div.sourceCode .fc, div.sourceCode .fc i {
-  background-color: #cfc;
+div.sourceCode .fc,
+div.sourceCode .fc i {
+  background-color: rgb(4, 95, 4);
 }
 
-div.sourceCode .pc, div.sourceCode .pc i {
+div.sourceCode .pc,
+div.sourceCode .pc i {
   background-color: #ffc;
 }
 
-div.sourceCode .nc, div.sourceCode .nc i {
-  background-color: #fcc;
+div.sourceCode .nc,
+div.sourceCode .nc i {
+  background-color: rgb(82, 5, 5);
 }
 
-.percent, .absValue {
+.percent,
+.absValue {
   font-size: 90%;
 }
 
-.percent .green, .absValue .green {
+.percent .green,
+.absValue .green {
   color: #32cc32;
 }
 
-.percent .red, .absValue .red {
+.percent .red,
+.absValue .red {
   color: #f00;
 }
 
 .percent .totalDiff {
-  color: #3f3f3f;
+  color: #f8f8f2;
 }
